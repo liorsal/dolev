@@ -178,21 +178,31 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function nextSlide() {
+        const oldSlide = currentSlide;
         currentSlide = (currentSlide + 1) % imageFiles.length;
+        console.log(`Moving from slide ${oldSlide} to slide ${currentSlide}`);
         updateCarousel();
     }
 
     function prevSlide() {
+        const oldSlide = currentSlide;
         currentSlide = (currentSlide - 1 + imageFiles.length) % imageFiles.length;
+        console.log(`Moving from slide ${oldSlide} to slide ${currentSlide}`);
         updateCarousel();
     }
 
     function startAutoPlay() {
-        if (autoPlayInterval) return;
+        if (autoPlayInterval) {
+            clearInterval(autoPlayInterval);
+        }
         
+        console.log('Starting auto-play...');
         autoPlayInterval = setInterval(() => {
             if (!isUserInteracting) {
+                console.log('Auto-play: moving to next slide');
                 nextSlide();
+            } else {
+                console.log('Auto-play paused: user is interacting');
             }
         }, 3000); // 3 seconds
     }
