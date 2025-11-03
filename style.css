@@ -19,7 +19,7 @@
     --radius-lg: 24px;
     --radius-md: 18px;
     --radius-sm: 12px;
-    --header-height: 76px;
+    --header-height: 120px;
     --touch-target: 44px; /* Minimum touch target size for mobile */
     --pole-red: #E41D2E;
     --pole-blue: #1F4BA3;
@@ -31,7 +31,7 @@
 
 @media (max-width: 560px) {
     :root {
-        --header-height: 64px;
+        --header-height: 100px;
         --radius-lg: 20px;
         --radius-md: 16px;
         --radius-sm: 10px;
