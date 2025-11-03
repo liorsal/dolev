@@ -135,10 +135,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function updateCarousel() {
-        if (!carouselTrack) return;
+        if (!carouselTrack) {
+            console.error('Carousel track not found in updateCarousel');
+            return;
+        }
         
-        // Calculate the transform value
-        const transformValue = -currentSlide * 100;
+        // For RTL, we need to use positive values to move right (which shows next slide)
+        // Calculate the transform value - in RTL, positive moves right
+        const transformValue = currentSlide * 100;
         carouselTrack.style.transform = `translateX(${transformValue}%)`;
         carouselTrack.style.webkitTransform = `translateX(${transformValue}%)`;
         
@@ -146,8 +150,13 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Update active slide
         const slides = carouselTrack.querySelectorAll('.gallery-item');
+        console.log('Total slides found:', slides.length);
         slides.forEach((slide, index) => {
-            slide.classList.toggle('active', index === currentSlide);
+            const isActive = index === currentSlide;
+            slide.classList.toggle('active', isActive);
+            if (isActive) {
+                console.log('Active slide:', index);
+            }
         });
         
         // Update indicator
