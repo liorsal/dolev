@@ -40,24 +40,39 @@ document.addEventListener('DOMContentLoaded', () => {
         'IMG_2310.JPG'
     ];
 
-    if (galleryGrid) {
+    const carouselTrack = document.getElementById('gallery-grid');
+    const currentImgElement = document.getElementById('current-img');
+    const totalImgElement = document.getElementById('total-img');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+
+    let currentSlide = 0;
+    let autoPlayInterval = null;
+    let isUserInteracting = false;
+
+    if (totalImgElement) {
+        totalImgElement.textContent = imageFiles.length;
+    }
+
+    if (carouselTrack) {
         const fragment = document.createDocumentFragment();
 
         imageFiles.forEach((filename, index) => {
-            const galleryItem = document.createElement('button');
+            const galleryItem = document.createElement('div');
             galleryItem.className = 'gallery-item';
-            galleryItem.type = 'button';
+            if (index === 0) galleryItem.classList.add('active');
             galleryItem.setAttribute('data-index', index);
-            galleryItem.setAttribute('aria-label', `פתיחת עמוד ${index + 1} מהספר`);
+            galleryItem.setAttribute('aria-label', `עמוד ${index + 1} מתוך ${imageFiles.length}`);
 
             const img = document.createElement('img');
+            // Load first 3 images immediately, rest lazy
+            img.loading = index < 3 ? 'eager' : 'lazy';
             img.src = `images/${filename}`;
-            img.alt = `דולב נלול - עמוד ${index + 1}`;
-            img.loading = 'lazy';
+            img.alt = `דולב מלול - עמוד ${index + 1}`;
 
             img.onerror = function handleImageError() {
-                this.remove();
-                galleryItem.remove();
+                console.error('Error loading image:', filename);
+                this.style.display = 'none';
             };
 
             galleryItem.appendChild(img);
@@ -65,15 +80,161 @@ document.addEventListener('DOMContentLoaded', () => {
             fragment.appendChild(galleryItem);
         });
 
-        galleryGrid.appendChild(fragment);
+        carouselTrack.appendChild(fragment);
+    }
+
+    function updateCarousel() {
+        if (!carouselTrack) return;
+        
+        carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+        
+        // Update active slide
+        const slides = carouselTrack.querySelectorAll('.gallery-item');
+        slides.forEach((slide, index) => {
+            slide.classList.toggle('active', index === currentSlide);
+        });
+        
+        // Update indicator
+        if (currentImgElement) {
+            currentImgElement.textContent = currentSlide + 1;
+        }
+        
+        // Preload adjacent images
+        preloadImages(currentSlide);
+    }
+
+    function preloadImages(currentIndex) {
+        [currentIndex - 1, currentIndex + 1].forEach(index => {
+            if (index >= 0 && index < imageFiles.length) {
+                const img = new Image();
+                img.src = `images/${imageFiles[index]}`;
+            }
+        });
+    }
+
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % imageFiles.length;
+        updateCarousel();
+    }
+
+    function prevSlide() {
+        currentSlide = (currentSlide - 1 + imageFiles.length) % imageFiles.length;
+        updateCarousel();
+    }
+
+    function startAutoPlay() {
+        if (autoPlayInterval) return;
+        
+        autoPlayInterval = setInterval(() => {
+            if (!isUserInteracting) {
+                nextSlide();
+            }
+        }, 3000); // 3 seconds
+    }
+
+    function stopAutoPlay() {
+        if (autoPlayInterval) {
+            clearInterval(autoPlayInterval);
+            autoPlayInterval = null;
+        }
+    }
+
+    function pauseOnInteraction() {
+        isUserInteracting = true;
+        stopAutoPlay();
+        
+        // Resume after 10 seconds of no interaction
+        setTimeout(() => {
+            isUserInteracting = false;
+            startAutoPlay();
+        }, 10000);
+    }
+
+    // Event listeners
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            pauseOnInteraction();
+        });
+    }
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            pauseOnInteraction();
+        });
+    }
+
+    // Touch/swipe support
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    if (carouselTrack) {
+        const carouselWrapper = carouselTrack.closest('.carousel-wrapper');
+        
+        if (carouselWrapper) {
+            carouselWrapper.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+                pauseOnInteraction();
+            }, { passive: true });
+
+            carouselWrapper.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, { passive: true });
+        }
+    }
+
+    function handleSwipe() {
+        const swipeThreshold = 50;
+        const diff = touchStartX - touchEndX;
+
+        if (Math.abs(diff) > swipeThreshold) {
+            if (diff > 0) {
+                // Swipe right = next
+                nextSlide();
+            } else {
+                // Swipe left = previous
+                prevSlide();
+            }
+        }
+    }
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+            prevSlide();
+            pauseOnInteraction();
+        } else if (e.key === 'ArrowRight') {
+            nextSlide();
+            pauseOnInteraction();
+        }
+    });
+
+    // Initialize
+    updateCarousel();
+    startAutoPlay();
+
+    // Pause on hover (desktop)
+    const carouselWrapper = document.querySelector('.carousel-wrapper');
+    if (carouselWrapper) {
+        carouselWrapper.addEventListener('mouseenter', () => {
+            isUserInteracting = true;
+            stopAutoPlay();
+        });
+
+        carouselWrapper.addEventListener('mouseleave', () => {
+            isUserInteracting = false;
+            startAutoPlay();
+        });
     }
 
     function openModal(filename, pageNumber) {
         if (!modal || !modalImg || !modalCaption) return;
 
         modalImg.src = `images/${filename}`;
-        modalImg.alt = `איור מספר ${pageNumber} מתוך הספר דולב נלול`;
-        modalCaption.textContent = `עמוד ${pageNumber} מתוך הספר "דולב נלול"`;
+        modalImg.alt = `איור מספר ${pageNumber} מתוך הספר דולב מלול`;
+        modalCaption.textContent = `עמוד ${pageNumber} מתוך הספר "דולב מלול"`;
         modal.classList.add('open');
         modal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';

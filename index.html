@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>דולב נלול | סיפור מקרית שמונה</title>
-    <meta name="description" content="דולב נלול - ספר מאויר שמאיר את קולות קרית שמונה. הכירו את הדמויות, הצבעים והאנשים שמרכיבים את העיר הצפונית.">
+    <title>דולב מלול | סיפור מקרית שמונה</title>
+    <meta name="description" content="דולב מלול - ספר מאויר שמאיר את קולות קרית שמונה. הכירו את הדמויות, הצבעים והאנשים שמרכיבים את העיר הצפונית.">
     <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,7 +15,7 @@
 
     <header class="site-header">
         <div class="container header-inner">
-            <a href="#hero" class="logo" aria-label="דולב נלול">דולב&nbsp;נלול</a>
+            <a href="#hero" class="logo" aria-label="דולב מלול">דולב&nbsp;מלול</a>
             <button class="nav-toggle" aria-label="תפריט" aria-expanded="false">
                 <span></span>
                 <span></span>
@@ -37,7 +37,7 @@
             <div class="container hero-layout">
                 <div class="hero-content">
                     <span class="hero-tag">ספר מקרית שמונה</span>
-                    <h1>דולב נלול</h1>
+                    <h1>דולב מלול</h1>
                     <p>
                         קרית שמונה עומדת במרכז הסיפור: אנשים, רחובות, מרפסות ואור צפוני.
                         הספר משלב טקסט מאופק עם איורים שחור-לבן ונגיעות כחול שמכניסות חיים עדינים לכל עמוד.
@@ -49,11 +49,7 @@
                 </div>
                 <div class="hero-media">
                     <div class="frame">
-                        <img src="images/IMG_2310.JPG" alt="איור מקרית שמונה מתוך הספר דולב נלול">
-                    </div>
-                    <div class="note">
-                        <span>זמן קריאה</span>
-                        <strong>75 דקות</strong>
+                        <img src="images/IMG_2310.JPG" alt="איור מקרית שמונה מתוך הספר דולב מלול">
                     </div>
                 </div>
             </div>
@@ -65,7 +61,6 @@
             <div class="container">
                 <div class="section-header">
                     <span class="section-tag">העיר שבתוך הספר</span>
-                    <h2>סיפור שקורא את קרית שמונה בקול רם ושקט</h2>
                 </div>
                 <div class="story-grid">
                     <p>
@@ -82,16 +77,27 @@
 
         <div class="led-strip" aria-hidden="true"></div>
 
-        <section class="section gallery" id="gallery">
-            <div class="container">
-                <div class="section-header center">
-                    <span class="section-tag">איורים מתוך הספר</span>
-                    <h2>קרית שמונה בשחור, לבן וכחול</h2>
-                    <p class="section-lead">
-                        לחיצה על איור תפתח אותו בחלון נקי לצפייה מקרוב. כל תמונה מלווה בהסבר קצר בתוך הספר.
-                    </p>
+        <section class="gallery-section" id="gallery">
+            <div class="section-header center">
+                <span class="section-tag">איורים מתוך הספר</span>
+            </div>
+            <div class="carousel-container">
+                <div class="carousel-wrapper" id="carousel-wrapper">
+                    <div class="carousel-track" id="gallery-grid" aria-live="polite"></div>
                 </div>
-                <div class="gallery-grid" id="gallery-grid" aria-live="polite"></div>
+                <button class="carousel-btn prev-btn" id="prevBtn" aria-label="תמונה קודמת">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M15 18l-6-6 6-6"/>
+                    </svg>
+                </button>
+                <button class="carousel-btn next-btn" id="nextBtn" aria-label="תמונה הבאה">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 18l6-6-6-6"/>
+                    </svg>
+                </button>
+            </div>
+            <div class="gallery-indicator">
+                <span id="current-img">1</span> / <span id="total-img">29</span>
             </div>
         </section>
 
@@ -130,14 +136,14 @@
     <footer class="footer">
         <div class="container footer-layout">
             <div>
-                <span class="footer-logo">דולב נלול</span>
+                <span class="footer-logo">דולב מלול</span>
                 <p>ספר שמאיר את קרית שמונה בעדשה פשוטה ומדויקת.</p>
             </div>
             <div class="footer-links">
                 <a href="#story">על הספר</a>
                 <a href="#contact">צור קשר</a>
             </div>
-            <p class="footer-copy">&copy; 2024 דולב נלול. כל הזכויות שמורות.</p>
+            <p class="footer-copy">&copy; 2024 דולב מלול. כל הזכויות שמורות.</p>
         </div>
     </footer>
 
