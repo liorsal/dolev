@@ -71,11 +71,15 @@ document.addEventListener('DOMContentLoaded', () => {
             const img = document.createElement('img');
             // Load first 3 images immediately, rest lazy
             img.loading = index < 3 ? 'eager' : 'lazy';
+            
+            // Create the image path - handle spaces in filenames
             const imagePath = `images/${encodeURIComponent(filename)}`;
-            img.src = imagePath;
+            
+            // Set attributes first
             img.alt = `דולב מלול - עמוד ${index + 1}`;
             img.setAttribute('data-filename', filename);
             img.setAttribute('data-index', index);
+            img.setAttribute('data-path', imagePath);
             
             // Add style to ensure visibility
             img.style.display = 'block';
@@ -85,26 +89,30 @@ document.addEventListener('DOMContentLoaded', () => {
             img.style.maxHeight = 'calc(100% - 40px)';
 
             img.onerror = function handleImageError() {
-                console.error('❌ Error loading image:', imagePath);
-                console.error('Filename:', filename);
-                console.error('Index:', index);
-                console.error('Image element:', this);
+                console.error(`❌ Error loading image ${index}:`, filename);
+                console.error('  - Path:', imagePath);
+                console.error('  - Current src:', this.src);
+                console.error('  - Expected src:', imagePath);
                 this.style.border = '2px solid red';
                 this.style.backgroundColor = '#ff000020';
             };
 
             img.onload = function() {
-                console.log(`✓ Image ${index} loaded:`, filename);
-                console.log('  - Source:', this.src);
+                const actualSrc = this.src;
+                const expectedFilename = filename;
+                console.log(`✓ Image ${index} loaded:`);
+                console.log('  - Filename:', expectedFilename);
+                console.log('  - Actual src:', actualSrc);
                 console.log('  - Natural size:', this.naturalWidth, 'x', this.naturalHeight);
-                console.log('  - Current src:', this.getAttribute('src'));
-                console.log('  - Data filename:', this.getAttribute('data-filename'));
+                
+                // Verify it's the correct image
+                if (!actualSrc.includes(expectedFilename.replace(' ', '%20'))) {
+                    console.warn('⚠️ Warning: Image src might not match filename!');
+                }
             };
             
-            // Add unique identifier to prevent caching issues
-            img.src = imagePath + '?v=' + index + '&t=' + Date.now();
-            // Set it again to ensure it's correct
-            img.setAttribute('src', imagePath);
+            // Set src last to ensure all handlers are attached
+            img.src = imagePath;
 
             galleryItem.appendChild(img);
             galleryItem.addEventListener('click', () => openModal(filename, index + 1));
