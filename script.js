@@ -131,11 +131,27 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('✓ Carousel track created with', imageFiles.length, 'items');
         console.log('Carousel track children:', carouselTrack.children.length);
         
-        // Force initial display
+        // Force initial display - wait for images to load and DOM to be ready
         setTimeout(() => {
             updateCarousel();
             console.log('Initial carousel update completed');
+            
+            // Double-check after images load
+            setTimeout(() => {
+                updateCarousel();
+                console.log('Carousel update after image load');
+            }, 500);
         }, 100);
+        
+        // Update carousel on window resize
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                console.log('Window resized, updating carousel');
+                updateCarousel();
+            }, 150);
+        });
     } else {
         console.error('❌ Carousel track element not found!');
         console.error('Looking for element with ID: gallery-grid');
