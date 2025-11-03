@@ -240,9 +240,35 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Initialize
+    // Initialize - reset to first slide
+    currentSlide = 0;
     updateCarousel();
     startAutoPlay();
+    
+    // Debug: Check if images are visible
+    setTimeout(() => {
+        const items = carouselTrack.querySelectorAll('.gallery-item');
+        const images = carouselTrack.querySelectorAll('img');
+        console.log('Total items:', items.length);
+        console.log('Total images:', images.length);
+        console.log('Current slide:', currentSlide);
+        console.log('Transform:', carouselTrack.style.transform);
+        
+        images.forEach((img, idx) => {
+            if (idx < 3) {
+                console.log(`Image ${idx}:`, {
+                    src: img.src,
+                    complete: img.complete,
+                    naturalWidth: img.naturalWidth,
+                    naturalHeight: img.naturalHeight,
+                    offsetWidth: img.offsetWidth,
+                    offsetHeight: img.offsetHeight,
+                    display: window.getComputedStyle(img).display,
+                    visibility: window.getComputedStyle(img).visibility
+                });
+            }
+        });
+    }, 500);
 
     // Pause on hover (desktop)
     const carouselWrapper = document.querySelector('.carousel-wrapper');
