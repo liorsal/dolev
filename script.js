@@ -117,7 +117,12 @@ document.addEventListener('DOMContentLoaded', () => {
             };
             
             // Set src last to ensure all handlers are attached
-            img.src = imagePath;
+            // Use absolute path to avoid issues
+            const fullPath = window.location.href.includes('file://') 
+                ? imagePath 
+                : `./${imagePath}`;
+            img.src = fullPath;
+            console.log(`Setting image ${index} src to:`, fullPath);
 
             galleryItem.appendChild(img);
             galleryItem.addEventListener('click', () => openModal(filename, index + 1));
