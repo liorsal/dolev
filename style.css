@@ -69,6 +69,7 @@ a {
     position: fixed;
     inset: 0;
     background:
+        url('logo.JPG') center center / cover no-repeat,
         radial-gradient(circle at top right, rgba(58, 123, 213, 0.08), transparent 55%),
         radial-gradient(circle at bottom left, rgba(255, 255, 255, 0.05), transparent 60%);
     z-index: -1;
