@@ -407,168 +407,150 @@ a {
     margin: 0 auto 28px;
 }
 
-/* Auto-playing horizontal carousel */
 .carousel-container {
     position: relative;
-    width: 100%;
-    max-width: 420px;
+    width: min(420px, 100%);
     margin: 0 auto;
-    padding: 0 50px;
 }
 
 .carousel-wrapper {
-    overflow: hidden !important;
-    border-radius: var(--radius-lg);
-    box-shadow: var(--shadow);
-    background: var(--bg-surface);
-    border: 1px solid var(--border);
     position: relative;
-    width: 100%;
-    height: 540px;
-    display: block !important;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    background: var(--bg-surface);
+    box-shadow: var(--shadow);
+    height: clamp(320px, 60vh, 460px);
 }
 
 .carousel-track {
-    display: flex !important;
-    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    display: flex;
+    height: 100%;
+    transition: transform 0.45s ease;
     will-change: transform;
+    touch-action: pan-y;
+}
+
+.carousel-track .gallery-item {
+    flex: 0 0 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 22px;
+    background: transparent;
+    min-width: 0;
+    position: relative;
+}
+
+.carousel-track .gallery-item img {
     width: 100%;
-    position: relative;
-    transform: translateX(0) !important;
-    direction: ltr !important;
-}
-
-.gallery-item {
-    min-width: 100% !important;
-    width: 100% !important;
-    position: relative;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    background: var(--bg-main);
-    cursor: pointer;
-    flex-shrink: 0 !important;
-    height: 500px !important;
-    padding: 20px !important;
-    box-sizing: border-box !important;
-    overflow: visible !important;
-}
-
-.gallery-item img {
-    width: auto !important;
-    height: auto !important;
-    max-width: 100% !important;
-    max-height: 460px !important;
-    min-width: 200px !important;
-    min-height: 200px !important;
-    object-fit: contain !important;
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
-    user-select: none;
-    -webkit-user-drag: none;
-    margin: 0 auto !important;
-    position: relative !important;
-    z-index: 1 !important;
-    background: transparent !important;
-    image-rendering: auto !important;
-}
-
-.gallery-item:active img {
-    opacity: 0.95;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: calc(var(--radius-md) - 6px);
+    box-shadow: 0 12px 24px rgba(4, 7, 20, 0.25);
+    display: block;
+    visibility: visible;
+    opacity: 1;
 }
 
 .carousel-btn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(13, 17, 23, 0.85);
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--border);
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
-    width: 56px;
-    height: 56px;
-    min-width: var(--touch-target);
-    min-height: var(--touch-target);
-    cursor: pointer;
-    display: flex;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    background: rgba(13, 17, 23, 0.75);
+    color: var(--text-primary);
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: var(--text-primary);
-    transition: all 0.3s ease;
-    z-index: 10;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
+    z-index: 2;
 }
 
-.carousel-btn:hover {
-    background: rgba(19, 24, 32, 0.95);
-    transform: translateY(-50%) scale(1.1);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-}
-
-.carousel-btn:active {
-    transform: translateY(-50%) scale(0.95);
+.carousel-btn:hover,
+.carousel-btn:focus {
+    background: rgba(19, 24, 32, 0.9);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
 }
 
 .prev-btn {
-    right: 0;
+    right: 12px;
 }
 
 .next-btn {
-    left: 0;
+    left: 12px;
 }
 
 .carousel-btn svg {
-    width: 28px;
-    height: 28px;
+    width: 22px;
+    height: 22px;
 }
 
 .gallery-indicator {
-    margin-top: 12px;
-    background: rgba(13, 17, 23, 0.85);
-    backdrop-filter: blur(10px);
-    border: 1px solid var(--border);
-    padding: 8px 16px;
+    margin-top: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 16px;
     border-radius: 999px;
+    background: rgba(19, 24, 32, 0.82);
+    border: 1px solid var(--border);
     color: var(--text-secondary);
     font-size: 0.85rem;
-    font-weight: 600;
-    pointer-events: none;
 }
 
 .gallery-indicator span {
     color: var(--text-primary);
+    font-weight: 600;
 }
 
-@media (max-width: 560px) {
-    .carousel-container {
-        padding: 0 45px;
-        max-width: 100%;
-    }
-
+@media (max-width: 640px) {
     .carousel-wrapper {
-        height: 400px;
+        height: clamp(260px, 58vh, 360px);
     }
 
-    .gallery-item {
-        height: 400px;
-        padding: 15px;
+    .carousel-track .gallery-item {
+        padding: 18px;
     }
 
     .carousel-btn {
-        width: 44px;
-        height: 44px;
+        width: 40px;
+        height: 40px;
+    }
+
+    .prev-btn {
+        right: 8px;
+    }
+
+    .next-btn {
+        left: 8px;
+    }
+}
+
+@media (max-width: 420px) {
+    .carousel-container {
+        max-width: 300px;
+    }
+
+    .carousel-btn {
+        width: 36px;
+        height: 36px;
     }
 
     .carousel-btn svg {
-        width: 20px;
-        height: 20px;
+        width: 18px;
+        height: 18px;
     }
 
     .gallery-indicator {
-        margin-top: 10px;
-        padding: 8px 14px;
         font-size: 0.8rem;
+        padding: 6px 12px;
     }
 }
 
@@ -769,7 +751,8 @@ a {
         top: var(--header-height);
         right: 0;
         left: 0;
-        background: rgba(13, 17, 23, 0.95);
+        width: 100%;
+        background: rgba(13, 17, 23, 0.97);
         border-bottom: 1px solid var(--border);
         transform: translateY(-20px);
         opacity: 0;
@@ -777,6 +760,8 @@ a {
         display: flex;
         justify-content: center;
         transition: opacity 0.2s ease, transform 0.2s ease;
+        padding: 18px 0 26px;
+        box-shadow: 0 18px 32px rgba(0, 0, 0, 0.35);
     }
 
     .site-nav.is-open {
@@ -787,7 +772,36 @@ a {
 
     .nav-list {
         flex-direction: column;
-        padding: 22px 0 28px;
+        gap: 12px;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        max-width: 320px;
+    }
+
+    .nav-list li {
+        width: 100%;
+    }
+
+    .nav-list a {
+        display: block;
+        width: 100%;
+        text-align: center;
+        padding: 12px 0;
+        border-radius: var(--radius-sm);
+        background: rgba(255, 255, 255, 0.03);
+        transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .nav-list a:hover,
+    .nav-list a:focus {
+        background: rgba(58, 123, 213, 0.16);
+        color: var(--text-primary);
+    }
+
+    .nav-cta {
+        border-radius: var(--radius-sm);
+        border: 1px solid rgba(58, 123, 213, 0.4);
     }
 
     .nav-toggle {
@@ -801,15 +815,67 @@ a {
         padding-bottom: 50px;
     }
 
+    .section {
+        padding: 70px 0;
+    }
+
     .story-grid {
         padding: 24px 20px;
     }
 
-    
+    .hero-content {
+        align-items: center;
+        text-align: center;
+        gap: 18px;
+    }
+
+    .hero p {
+        max-width: 100%;
+    }
+
+    .hero-actions {
+        width: 100%;
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .hero-actions .btn {
+        flex: 1 1 140px;
+        padding: 12px 18px;
+    }
+
+    .hero-media {
+        align-items: stretch;
+    }
+
+    .frame {
+        width: 100%;
+        padding: 16px;
+    }
+
+    .note {
+        align-self: stretch;
+        justify-content: center;
+        padding: 10px 0;
+    }
+
+    .led-strip {
+        width: 92%;
+        box-shadow: 0 0 8px rgba(58, 123, 213, 0.18);
+    }
+
+    .contact-cards {
+        gap: 14px;
+    }
+
+    .contact-card {
+        padding: 18px;
+    }
+
     .logo {
         font-size: 1.4rem;
     }
-    
+
     .header-inner {
         padding: 0 16px;
     }
@@ -828,12 +894,18 @@ a {
         line-height: 1.75;
         margin-bottom: 28px;
     }
-    
+
+    .contact-cards,
+    .footer-layout {
+        justify-items: center;
+    }
+
     .footer-layout {
         padding: 0 20px;
         gap: 24px;
+        text-align: center;
     }
-    
+
     .footer-links {
         flex-direction: column;
         gap: 12px;

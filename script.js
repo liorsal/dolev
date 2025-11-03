@@ -83,28 +83,14 @@ document.addEventListener('DOMContentLoaded', () => {
             img.setAttribute('data-path', imagePath);
             
             // Add style to ensure visibility
-            img.style.display = 'block';
-            img.style.width = 'auto';
-            img.style.height = 'auto';
-            img.style.maxWidth = '100%';
-            img.style.maxHeight = '460px';
-            img.style.minWidth = '200px';
-            img.style.minHeight = '200px';
-            img.style.objectFit = 'contain';
-            img.style.visibility = 'visible';
-            img.style.opacity = '1';
-
             img.onerror = function handleImageError() {
                 console.error(`❌ Error loading image ${index}:`, filename);
                 console.error('  - Path:', imagePath);
                 console.error('  - Current src:', this.src);
                 console.error('  - Expected src:', imagePath);
                 console.error('  - Full URL:', window.location.href);
-                this.style.border = '2px solid red';
-                this.style.backgroundColor = '#ff000020';
-                this.style.minWidth = '200px';
-                this.style.minHeight = '200px';
-                this.innerHTML = '❌ Image not found';
+                this.style.border = '2px solid rgba(255, 0, 0, 0.5)';
+                this.style.backgroundColor = 'rgba(255, 0, 0, 0.08)';
             };
 
             img.onload = function() {
@@ -122,22 +108,6 @@ document.addEventListener('DOMContentLoaded', () => {
             };
             
             // Force image to be visible BEFORE setting src
-            img.style.cssText = `
-                display: block !important;
-                visibility: visible !important;
-                opacity: 1 !important;
-                width: auto !important;
-                height: auto !important;
-                max-width: 100% !important;
-                max-height: 460px !important;
-                min-width: 200px !important;
-                min-height: 200px !important;
-                object-fit: contain !important;
-                margin: 0 auto !important;
-                position: relative !important;
-                z-index: 1 !important;
-            `;
-            
             // Set src last to ensure all handlers are attached
             img.src = imagePath;
             console.log(`Setting image ${index} src to:`, imagePath);
