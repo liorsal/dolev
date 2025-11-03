@@ -327,8 +327,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize - reset to first slide
     currentSlide = 0;
-    updateCarousel();
-    startAutoPlay();
+    
+    // Wait a bit for DOM to be fully ready
+    setTimeout(() => {
+        updateCarousel();
+        startAutoPlay();
+        console.log('Carousel initialized and started');
+    }, 200);
     
     // Debug: Check if images are visible
     setTimeout(() => {
