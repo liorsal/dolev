@@ -117,12 +117,27 @@ document.addEventListener('DOMContentLoaded', () => {
             };
             
             // Set src last to ensure all handlers are attached
-            // Use absolute path to avoid issues
-            const fullPath = window.location.href.includes('file://') 
-                ? imagePath 
-                : `./${imagePath}`;
-            img.src = fullPath;
-            console.log(`Setting image ${index} src to:`, fullPath);
+            // Use relative path
+            img.src = imagePath;
+            
+            // Force image to be visible
+            img.style.cssText = `
+                display: block !important;
+                visibility: visible !important;
+                opacity: 1 !important;
+                width: auto !important;
+                height: auto !important;
+                max-width: 100% !important;
+                max-height: 460px !important;
+                min-width: 200px !important;
+                min-height: 200px !important;
+                object-fit: contain !important;
+                margin: 0 auto !important;
+                position: relative !important;
+                z-index: 1 !important;
+            `;
+            
+            console.log(`Setting image ${index} src to:`, imagePath);
 
             galleryItem.appendChild(img);
             galleryItem.addEventListener('click', () => openModal(filename, index + 1));
