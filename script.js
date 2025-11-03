@@ -65,31 +65,38 @@ document.addEventListener('DOMContentLoaded', () => {
             galleryItem.className = 'gallery-item';
             if (index === 0) galleryItem.classList.add('active');
             galleryItem.setAttribute('data-index', index);
+            galleryItem.setAttribute('data-filename', filename);
             galleryItem.setAttribute('aria-label', `עמוד ${index + 1} מתוך ${imageFiles.length}`);
 
             const img = document.createElement('img');
             // Load first 3 images immediately, rest lazy
             img.loading = index < 3 ? 'eager' : 'lazy';
-            const imagePath = `images/${filename}`;
+            const imagePath = `images/${encodeURIComponent(filename)}`;
             img.src = imagePath;
             img.alt = `דולב מלול - עמוד ${index + 1}`;
+            img.setAttribute('data-filename', filename);
+            img.setAttribute('data-index', index);
             
             // Add style to ensure visibility
             img.style.display = 'block';
-            img.style.width = '100%';
+            img.style.width = 'auto';
             img.style.height = 'auto';
-            img.style.maxWidth = '100%';
-            img.style.maxHeight = '100%';
+            img.style.maxWidth = 'calc(100% - 40px)';
+            img.style.maxHeight = 'calc(100% - 40px)';
 
             img.onerror = function handleImageError() {
-                console.error('Error loading image:', imagePath, filename);
+                console.error('❌ Error loading image:', imagePath);
+                console.error('Filename:', filename);
+                console.error('Index:', index);
                 console.error('Image element:', this);
                 this.style.border = '2px solid red';
                 this.style.backgroundColor = '#ff000020';
             };
 
             img.onload = function() {
-                console.log('✓ Image loaded successfully:', filename);
+                console.log(`✓ Image ${index} loaded:`, filename);
+                console.log('  - Source:', this.src);
+                console.log('  - Natural size:', this.naturalWidth, 'x', this.naturalHeight);
             };
 
             galleryItem.appendChild(img);
