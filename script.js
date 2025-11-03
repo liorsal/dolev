@@ -85,8 +85,13 @@ document.addEventListener('DOMContentLoaded', () => {
             img.style.display = 'block';
             img.style.width = 'auto';
             img.style.height = 'auto';
-            img.style.maxWidth = 'calc(100% - 40px)';
-            img.style.maxHeight = 'calc(100% - 40px)';
+            img.style.maxWidth = '100%';
+            img.style.maxHeight = '460px';
+            img.style.minWidth = '200px';
+            img.style.minHeight = '200px';
+            img.style.objectFit = 'contain';
+            img.style.visibility = 'visible';
+            img.style.opacity = '1';
 
             img.onerror = function handleImageError() {
                 console.error(`❌ Error loading image ${index}:`, filename);
