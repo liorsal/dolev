@@ -1,0 +1,16 @@
+# Images - don't commit large image files
+images/*.JPG
+images/*.jpg
+images/*.png
+images/*.jpeg
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
