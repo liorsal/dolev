@@ -165,8 +165,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         
-        // For RTL direction, we need negative values to move left (which shows next slide)
-        // Since the track has direction: rtl, negative moves it left (next slide)
+        // For horizontal carousel, use negative values to move left (next slide)
         const transformValue = -currentSlide * 100;
         carouselTrack.style.transform = `translateX(${transformValue}%)`;
         carouselTrack.style.webkitTransform = `translateX(${transformValue}%)`;

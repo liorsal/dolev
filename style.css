@@ -434,8 +434,8 @@ a {
     will-change: transform;
     width: 100%;
     position: relative;
-    transform: translateX(0);
-    direction: rtl;
+    transform: translateX(0) !important;
+    direction: ltr !important;
 }
 
 .gallery-item {
