@@ -172,7 +172,9 @@ a {
     position: sticky;
     top: 0;
     backdrop-filter: blur(12px);
-    background: rgba(13, 17, 23, 0.85);
+    background: 
+        url('logo.JPG') center center / cover no-repeat,
+        rgba(13, 17, 23, 0.85);
     border-bottom: 1px solid var(--border);
     height: var(--header-height);
     display: flex;
@@ -181,9 +183,23 @@ a {
     position: relative;
 }
 
+.site-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(13, 17, 23, 0.7);
+    z-index: -1;
+}
+
 .site-header.scrolled {
-    background: rgba(13, 17, 23, 0.95);
+    background: 
+        url('logo.JPG') center center / cover no-repeat,
+        rgba(13, 17, 23, 0.95);
     box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+.site-header.scrolled::before {
+    background: rgba(13, 17, 23, 0.8);
 }
 
 .header-inner {
