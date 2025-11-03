@@ -25,8 +25,9 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const img = document.createElement('img');
             img.src = `images/${filename}`;
-            img.alt = `תמונה מספר ${index + 1} מספר דולב מלול`;
+            img.alt = `תמונה ${index + 1} מתוך ${imageFiles.length} - עבודת תספורת מספר דולב מלול, קריית שמונה`;
             img.loading = index < 6 ? 'eager' : 'lazy';
+            img.decoding = 'async';
             
             item.appendChild(img);
             item.addEventListener('click', () => openModal(filename, index + 1));
@@ -77,8 +78,8 @@ document.addEventListener('DOMContentLoaded', () => {
         lastFocusElement = document.activeElement;
         
         modalImg.src = `images/${filename}`;
-        modalImg.alt = `תמונה מספר ${pageNumber} מספר דולב מלול`;
-        modalCaption.textContent = `תמונה ${pageNumber} מספר דולב מלול`;
+        modalImg.alt = `תמונה ${pageNumber} מתוך ${imageFiles.length} - עבודת תספורת מספר דולב מלול, קריית שמונה`;
+        modalCaption.textContent = `תמונה ${pageNumber} מתוך ${imageFiles.length} - עבודת תספורת מספר דולב מלול`;
         modal.classList.add('open');
         modal.setAttribute('aria-hidden', 'false');
         modal.setAttribute('aria-modal', 'true');
