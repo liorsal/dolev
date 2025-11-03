@@ -188,6 +188,15 @@ a {
     font-family: 'Frank Ruhl Libre', serif;
     font-size: 1.6rem;
     letter-spacing: 0.04em;
+    display: flex;
+    align-items: center;
+}
+
+.logo-image {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+    max-width: 200px;
 }
 
 .header-logo {
