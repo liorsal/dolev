@@ -140,13 +140,14 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         
-        // For RTL, we need to use positive values to move right (which shows next slide)
-        // Calculate the transform value - in RTL, positive moves right
-        const transformValue = currentSlide * 100;
+        // For RTL direction, we need negative values to move left (which shows next slide)
+        // Since the track has direction: rtl, negative moves it left (next slide)
+        const transformValue = -currentSlide * 100;
         carouselTrack.style.transform = `translateX(${transformValue}%)`;
         carouselTrack.style.webkitTransform = `translateX(${transformValue}%)`;
+        carouselTrack.style.msTransform = `translateX(${transformValue}%)`;
         
-        console.log('Updating carousel - slide:', currentSlide, 'transform:', transformValue + '%');
+        console.log('Updating carousel - slide:', currentSlide, '/', imageFiles.length - 1, 'transform:', transformValue + '%');
         
         // Update active slide
         const slides = carouselTrack.querySelectorAll('.gallery-item');
