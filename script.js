@@ -97,7 +97,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.log(`✓ Image ${index} loaded:`, filename);
                 console.log('  - Source:', this.src);
                 console.log('  - Natural size:', this.naturalWidth, 'x', this.naturalHeight);
+                console.log('  - Current src:', this.getAttribute('src'));
+                console.log('  - Data filename:', this.getAttribute('data-filename'));
             };
+            
+            // Add unique identifier to prevent caching issues
+            img.src = imagePath + '?v=' + index + '&t=' + Date.now();
+            // Set it again to ensure it's correct
+            img.setAttribute('src', imagePath);
 
             galleryItem.appendChild(img);
             galleryItem.addEventListener('click', () => openModal(filename, index + 1));
