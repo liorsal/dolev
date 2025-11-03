@@ -224,16 +224,133 @@ a {
 
 .hero-layout {
     display: grid;
-    grid-template-columns: repeat(12, 1fr);
-    gap: 44px;
-    align-items: center;
+    grid-template-columns: 200px 1fr 200px;
+    gap: 40px;
+    align-items: start;
 }
 
 .hero-content {
-    grid-column: span 7;
     display: flex;
     flex-direction: column;
     gap: 24px;
+    text-align: center;
+}
+
+.sidebar-left,
+.sidebar-right {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-content {
+    padding: 24px;
+    background: var(--bg-surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: calc(var(--header-height) + 20px);
+}
+
+.sidebar-content h3 {
+    font-family: 'Frank Ruhl Libre', serif;
+    font-size: 1.3rem;
+    color: var(--text-primary);
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.hours-list,
+.services-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.hours-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+.hours-list li:last-child {
+    border-bottom: none;
+}
+
+.hours-list li span:first-child {
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.services-list li {
+    padding: 8px 0;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    position: relative;
+    padding-right: 20px;
+}
+
+.services-list li::before {
+    content: '✂';
+    position: absolute;
+    right: 0;
+    color: var(--accent);
+    font-size: 0.9rem;
+}
+
+@media (max-width: 1200px) {
+    .hero-layout {
+        grid-template-columns: 180px 1fr 180px;
+        gap: 30px;
+    }
+}
+
+@media (max-width: 920px) {
+    .hero-layout {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+
+    .sidebar-left,
+    .sidebar-right {
+        order: 2;
+    }
+
+    .hero-content {
+        order: 1;
+    }
+
+    .sidebar-content {
+        position: static;
+    }
+
+    .sidebar-left,
+    .sidebar-right {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+    }
+}
+
+@media (max-width: 560px) {
+    .sidebar-left,
+    .sidebar-right {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar-content {
+        padding: 20px;
+    }
+
+    .sidebar-content h3 {
+        font-size: 1.1rem;
+        margin-bottom: 16px;
+    }
 }
 
 .hero-tag {
