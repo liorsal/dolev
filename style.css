@@ -426,9 +426,11 @@ a {
 .carousel-track {
     display: flex;
     height: 100%;
+    width: 100%;
     transition: transform 0.45s ease;
     will-change: transform;
     touch-action: pan-y;
+    position: relative;
 }
 
 .carousel-track .gallery-item {
