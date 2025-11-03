@@ -98,17 +98,26 @@ document.addEventListener('DOMContentLoaded', () => {
         if (currentSlide < 0) currentSlide = 0;
         if (currentSlide >= imageFiles.length) currentSlide = imageFiles.length - 1;
         
-        // Use percentage-based transform
-        const transformValue = -currentSlide * 100;
-        carouselTrack.style.transform = `translateX(${transformValue}%)`;
-        carouselTrack.style.webkitTransform = `translateX(${transformValue}%)`;
+        // Get wrapper width for accurate calculation
+        const wrapper = document.getElementById('carousel-wrapper');
+        if (!wrapper) return;
+        
+        const wrapperWidth = wrapper.offsetWidth;
+        const transformValue = -currentSlide * wrapperWidth;
+        
+        // Apply transform
+        carouselTrack.style.transform = `translateX(${transformValue}px)`;
+        carouselTrack.style.webkitTransform = `translateX(${transformValue}px)`;
+        carouselTrack.style.msTransform = `translateX(${transformValue}px)`;
+        carouselTrack.style.OTransform = `translateX(${transformValue}px)`;
+        carouselTrack.style.MozTransform = `translateX(${transformValue}px)`;
         
         // Update indicator
         if (currentImgElement) {
             currentImgElement.textContent = currentSlide + 1;
         }
         
-        console.log('Carousel updated - slide:', currentSlide + 1, '/', imageFiles.length, 'transform:', transformValue + '%');
+        console.log('Carousel updated - slide:', currentSlide + 1, '/', imageFiles.length, 'transform:', transformValue + 'px', 'wrapperWidth:', wrapperWidth);
     }
 
     function nextSlide() {
@@ -200,11 +209,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize
     currentSlide = 0;
+    
+    // Wait for images to load and DOM to be ready
     setTimeout(() => {
         updateCarousel();
         startAutoPlay();
         console.log('Carousel initialized');
-    }, 300);
+        
+        // Update on window resize
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                updateCarousel();
+            }, 150);
+        });
+    }, 500);
 
     // Pause on hover (desktop)
     const carouselWrapper = document.querySelector('.carousel-wrapper');

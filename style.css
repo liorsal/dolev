@@ -427,7 +427,6 @@ a {
 .carousel-track {
     display: flex;
     height: 100%;
-    width: 100%;
     transition: transform 0.45s ease;
     will-change: transform;
     touch-action: pan-y;
@@ -448,6 +447,7 @@ a {
     position: relative;
     box-sizing: border-box;
     flex-shrink: 0;
+    overflow: hidden;
 }
 
 .carousel-track .gallery-item img {
