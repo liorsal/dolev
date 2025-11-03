@@ -31,7 +31,7 @@
 
 @media (max-width: 560px) {
     :root {
-        --header-height: 100px;
+        --header-height: 150px;
         --radius-lg: 20px;
         --radius-md: 16px;
         --radius-sm: 10px;
@@ -199,7 +199,7 @@ a {
 }
 
 .site-header.scrolled::before {
-    background: rgba(13, 17, 23, 0.8);
+    background: rgba(13, 17, 23, 0.6);
 }
 
 .header-inner {
