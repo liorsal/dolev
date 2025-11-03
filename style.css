@@ -21,6 +21,11 @@
     --radius-sm: 12px;
     --header-height: 76px;
     --touch-target: 44px; /* Minimum touch target size for mobile */
+    --pole-red: #E41D2E;
+    --pole-blue: #1F4BA3;
+    --pole-white: #FFFFFF;
+    --pole-width: 34px; /* רוחב פס בדסקטופ */
+    --gutter: 20px; /* ריווח פנימי לצדדים */
     font-family: 'Assistant', sans-serif;
 }
 
@@ -69,10 +74,76 @@ a {
     z-index: -1;
 }
 
+/* פסי ברברשופ בצדדים */
+.side-pole {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: var(--pole-width);
+    z-index: 1;
+    background: repeating-linear-gradient(
+        45deg,
+        var(--pole-white) 0 16px,
+        var(--pole-red) 16px 32px,
+        var(--pole-white) 32px 48px,
+        var(--pole-blue) 48px 64px
+    );
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+    pointer-events: none;
+}
+
+.side-pole.left {
+    left: 0;
+}
+
+.side-pole.right {
+    right: 0;
+}
+
+/* אנימציה עדינה לסיבוב */
+@keyframes pole-scroll {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: 0 128px;
+    }
+}
+
+.side-pole {
+    animation: pole-scroll 12s linear infinite;
+}
+
+/* נגישות - אם המשתמש מבקש פחות תנועה, מבטלים אנימציה */
+@media (prefers-reduced-motion: reduce) {
+    .side-pole {
+        animation: none;
+    }
+}
+
 .container {
     width: min(1080px, 92%);
     margin: 0 auto;
-    padding: 0 16px;
+    padding: 0 calc(var(--gutter) + var(--pole-width));
+    position: relative;
+    z-index: 2;
+}
+
+@media (max-width: 1024px) {
+    :root {
+        --pole-width: 24px;
+        --gutter: 16px;
+    }
+}
+
+@media (max-width: 768px) {
+    .side-pole {
+        display: none; /* מסתירים במובייל */
+    }
+    
+    .container {
+        padding: 0 20px;
+    }
 }
 
 @media (max-width: 560px) {
@@ -91,6 +162,7 @@ a {
     display: flex;
     align-items: center;
     z-index: 100;
+    position: relative;
 }
 
 .site-header.scrolled {
