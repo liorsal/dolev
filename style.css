@@ -172,9 +172,7 @@ a {
     position: sticky;
     top: 0;
     backdrop-filter: blur(12px);
-    background: 
-        url('logo.JPG') center center / cover no-repeat,
-        rgba(13, 17, 23, 0.85);
+    background: rgba(13, 17, 23, 0.85);
     border-bottom: 1px solid var(--border);
     height: var(--header-height);
     display: flex;
@@ -183,23 +181,9 @@ a {
     position: relative;
 }
 
-.site-header::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: rgba(13, 17, 23, 0.5);
-    z-index: -1;
-}
-
 .site-header.scrolled {
-    background: 
-        url('logo.JPG') center center / cover no-repeat,
-        rgba(13, 17, 23, 0.95);
+    background: rgba(13, 17, 23, 0.95);
     box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
-}
-
-.site-header.scrolled::before {
-    background: rgba(13, 17, 23, 0.6);
 }
 
 .header-inner {
@@ -212,25 +196,23 @@ a {
 
 .logo {
     font-family: 'Frank Ruhl Libre', serif;
-    font-size: 1.2rem;
+    font-size: 1.6rem;
     letter-spacing: 0.04em;
     color: var(--text-primary);
     font-weight: 700;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
-    line-height: 1.4;
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
 }
 
 .logo-english {
-    font-size: 1.1rem;
+    font-size: 1.4rem;
     font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
 }
 
 .logo-hebrew {
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 500;
+    display: block;
 }
 
 .header-logo {
