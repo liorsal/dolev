@@ -797,6 +797,13 @@ a {
     color: var(--accent-soft);
 }
 
+.social-icon {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
 @media (max-width: 560px) {
     .contact-card {
         padding: 20px;
