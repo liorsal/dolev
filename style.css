@@ -19,7 +19,7 @@
     --radius-lg: 24px;
     --radius-md: 18px;
     --radius-sm: 12px;
-    --header-height: 120px;
+    --header-height: 200px;
     --touch-target: 44px; /* Minimum touch target size for mobile */
     --pole-red: #E41D2E;
     --pole-blue: #1F4BA3;
@@ -214,15 +214,9 @@ a {
     font-family: 'Frank Ruhl Libre', serif;
     font-size: 1.6rem;
     letter-spacing: 0.04em;
-    display: flex;
-    align-items: center;
-}
-
-.logo-image {
-    height: 50px;
-    width: auto;
-    object-fit: contain;
-    max-width: 200px;
+    color: var(--text-primary);
+    font-weight: 700;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8);
 }
 
 .header-logo {
