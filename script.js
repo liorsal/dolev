@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', () => {
             item.className = 'gallery-item';
             item.setAttribute('role', 'button');
             item.setAttribute('tabindex', '0');
-            item.setAttribute('aria-label', `תמונה ${index + 1} מתוך ${imageFiles.length}`);
+            item.setAttribute('aria-label', `פתח תמונה ${index + 1} מתוך ${imageFiles.length} - מספר דולב מלול`);
             
             const img = document.createElement('img');
             img.src = `images/${filename}`;
@@ -41,23 +41,87 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    let lastFocusElement = null;
+    let focusableElements = [];
+
+    function getFocusableElements(container) {
+        const selectors = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+        return Array.from(container.querySelectorAll(selectors));
+    }
+
+    function trapFocus(e) {
+        if (!focusableElements.length) return;
+        
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+        
+        if (e.key === 'Tab') {
+            if (e.shiftKey) {
+                if (document.activeElement === firstElement) {
+                    e.preventDefault();
+                    lastElement.focus();
+                }
+            } else {
+                if (document.activeElement === lastElement) {
+                    e.preventDefault();
+                    firstElement.focus();
+                }
+            }
+        }
+    }
+
     function openModal(filename, pageNumber) {
         if (!modal || !modalImg || !modalCaption) return;
+        
+        // Save the element that opened the modal
+        lastFocusElement = document.activeElement;
+        
         modalImg.src = `images/${filename}`;
         modalImg.alt = `תמונה מספר ${pageNumber} מספר דולב מלול`;
         modalCaption.textContent = `תמונה ${pageNumber} מספר דולב מלול`;
         modal.classList.add('open');
         modal.setAttribute('aria-hidden', 'false');
+        modal.setAttribute('aria-modal', 'true');
         document.body.style.overflow = 'hidden';
+        
+        // Get focusable elements and trap focus
+        focusableElements = getFocusableElements(modal);
+        if (closeModalBtn) {
+            closeModalBtn.focus();
+        }
+        
+        // Add focus trap
+        modal.addEventListener('keydown', trapFocus);
+        
+        // Hide background content from screen readers
+        document.querySelectorAll('main, header, footer').forEach(el => {
+            el.setAttribute('aria-hidden', 'true');
+        });
     }
 
     function closeModal() {
         if (!modal || !modalImg) return;
+        
         modal.classList.remove('open');
         modal.setAttribute('aria-hidden', 'true');
+        modal.setAttribute('aria-modal', 'false');
         modalImg.removeAttribute('src');
         modalImg.removeAttribute('alt');
         document.body.style.overflow = '';
+        
+        // Remove focus trap
+        modal.removeEventListener('keydown', trapFocus);
+        
+        // Restore background content visibility
+        document.querySelectorAll('main, header, footer').forEach(el => {
+            el.removeAttribute('aria-hidden');
+        });
+        
+        // Return focus to the element that opened the modal
+        if (lastFocusElement) {
+            lastFocusElement.focus();
+            lastFocusElement = null;
+        }
     }
 
     if (closeModalBtn) {
