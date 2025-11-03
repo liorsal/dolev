@@ -98,8 +98,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 console.error('  - Path:', imagePath);
                 console.error('  - Current src:', this.src);
                 console.error('  - Expected src:', imagePath);
+                console.error('  - Full URL:', window.location.href);
                 this.style.border = '2px solid red';
                 this.style.backgroundColor = '#ff000020';
+                this.style.minWidth = '200px';
+                this.style.minHeight = '200px';
+                this.innerHTML = '❌ Image not found';
             };
 
             img.onload = function() {
