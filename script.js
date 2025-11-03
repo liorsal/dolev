@@ -21,10 +21,6 @@ document.addEventListener('DOMContentLoaded', () => {
             item.className = 'gallery-item';
             item.setAttribute('role', 'button');
             item.setAttribute('tabindex', '0');
-            item.setAttribute('aria-label', `איור ${index + 1} מתוך ${imageFiles.length}`);
-            
-            const img = document.createElement('img');
-            img.src = `images/${filename}`;
             item.setAttribute('aria-label', `תמונה ${index + 1} מתוך ${imageFiles.length}`);
             
             const img = document.createElement('img');
