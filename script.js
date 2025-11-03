@@ -75,12 +75,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 this.style.display = 'none';
             };
 
+            img.onload = function() {
+                console.log('Image loaded:', filename);
+            };
+
             galleryItem.appendChild(img);
             galleryItem.addEventListener('click', () => openModal(filename, index + 1));
             fragment.appendChild(galleryItem);
         });
 
         carouselTrack.appendChild(fragment);
+        console.log('Carousel track created with', imageFiles.length, 'images');
+    } else {
+        console.error('Carousel track element not found!');
     }
 
     function updateCarousel() {
