@@ -148,13 +148,27 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         
-        // For horizontal carousel, use negative values to move left (next slide)
-        const transformValue = -currentSlide * 100;
-        carouselTrack.style.transform = `translateX(${transformValue}%)`;
-        carouselTrack.style.webkitTransform = `translateX(${transformValue}%)`;
-        carouselTrack.style.msTransform = `translateX(${transformValue}%)`;
+        // Ensure currentSlide is within bounds
+        if (currentSlide < 0) {
+            currentSlide = 0;
+        }
+        if (currentSlide >= imageFiles.length) {
+            currentSlide = imageFiles.length - 1;
+        }
         
-        console.log('Updating carousel - slide:', currentSlide, '/', imageFiles.length - 1, 'transform:', transformValue + '%');
+        // For horizontal carousel, use pixel-based transform for reliability
+        // Calculate transform based on slide width (more reliable than percentages)
+        const wrapper = document.getElementById('carousel-wrapper');
+        const slideWidth = wrapper ? wrapper.offsetWidth : 100;
+        const transformValue = -currentSlide * slideWidth;
+        
+        // Apply transform with all browser prefixes
+        carouselTrack.style.transform = `translateX(${transformValue}px)`;
+        carouselTrack.style.webkitTransform = `translateX(${transformValue}px)`;
+        carouselTrack.style.msTransform = `translateX(${transformValue}px)`;
+        carouselTrack.style.MozTransform = `translateX(${transformValue}px)`;
+        
+        console.log('Updating carousel - slide:', currentSlide, '/', imageFiles.length - 1, 'transform:', transformValue + 'px', 'slideWidth:', slideWidth);
         
         // Update active slide
         const slides = carouselTrack.querySelectorAll('.gallery-item');
