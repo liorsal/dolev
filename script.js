@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const img = document.createElement('img');
             img.src = `images/${filename}`;
-            img.alt = `תמונה מספר ${index + 1} מספרן דולב מלול`;
+            img.alt = `תמונה מספר ${index + 1} מספר דולב מלול`;
             img.loading = index < 6 ? 'eager' : 'lazy';
             
             item.appendChild(img);
@@ -44,8 +44,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function openModal(filename, pageNumber) {
         if (!modal || !modalImg || !modalCaption) return;
         modalImg.src = `images/${filename}`;
-        modalImg.alt = `תמונה מספר ${pageNumber} מספרן דולב מלול`;
-        modalCaption.textContent = `תמונה ${pageNumber} מספרן דולב מלול`;
+        modalImg.alt = `תמונה מספר ${pageNumber} מספר דולב מלול`;
+        modalCaption.textContent = `תמונה ${pageNumber} מספר דולב מלול`;
         modal.classList.add('open');
         modal.setAttribute('aria-hidden', 'false');
         document.body.style.overflow = 'hidden';
