@@ -148,8 +148,13 @@ a {
 }
 
 @media (max-width: 560px) {
+    :root {
+        --pole-width: 16px;
+        --gutter: 10px;
+    }
+    
     .container {
-        padding: 0 20px;
+        padding: 0 calc(var(--gutter) + var(--pole-width));
     }
 }
 
