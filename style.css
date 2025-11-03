@@ -137,12 +137,13 @@ a {
 }
 
 @media (max-width: 768px) {
-    .side-pole {
-        display: none; /* מסתירים במובייל */
+    :root {
+        --pole-width: 18px;
+        --gutter: 12px;
     }
     
     .container {
-        padding: 0 20px;
+        padding: 0 calc(var(--gutter) + var(--pole-width));
     }
 }
 
