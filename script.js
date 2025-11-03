@@ -1,13 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM loaded, initializing carousel...');
-    
+
     const modal = document.getElementById('image-modal');
     const modalImg = document.getElementById('modal-img');
     const modalCaption = document.getElementById('modal-caption');
-    const closeModalBtn = modal ? modal.querySelector('.close') : null;
-    const header = document.querySelector('.site-header');
-    const siteNav = document.querySelector('.site-nav');
-    const navToggle = document.querySelector('.nav-toggle');
+    const closeModalBtn = document.querySelector('.close');
 
     const imageFiles = [
         '01986724-d273-43a5-864e-35e41541bc98 2.JPG',
@@ -42,7 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     const carouselTrack = document.getElementById('gallery-grid');
-    console.log('Carousel track element:', carouselTrack);
     const currentImgElement = document.getElementById('current-img');
     const totalImgElement = document.getElementById('total-img');
     const prevBtn = document.getElementById('prevBtn');
@@ -58,192 +54,80 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (carouselTrack) {
         console.log('Creating carousel with', imageFiles.length, 'images');
-        const fragment = document.createDocumentFragment();
-
+        
+        // Create all gallery items
         imageFiles.forEach((filename, index) => {
             const galleryItem = document.createElement('div');
             galleryItem.className = 'gallery-item';
-            if (index === 0) galleryItem.classList.add('active');
             galleryItem.setAttribute('data-index', index);
             galleryItem.setAttribute('data-filename', filename);
             galleryItem.setAttribute('aria-label', `עמוד ${index + 1} מתוך ${imageFiles.length}`);
 
             const img = document.createElement('img');
-            // Load first 3 images immediately, rest lazy
             img.loading = index < 3 ? 'eager' : 'lazy';
-            
-            // Create the image path - handle spaces in filenames
-            // Use simple path without encoding for local files
             const imagePath = `images/${filename}`;
             
-            // Set attributes first
             img.alt = `דולב מלול - עמוד ${index + 1}`;
             img.setAttribute('data-filename', filename);
             img.setAttribute('data-index', index);
             img.setAttribute('data-path', imagePath);
             
-            // Add style to ensure visibility
-            img.onerror = function handleImageError() {
+            img.onerror = function() {
                 console.error(`❌ Error loading image ${index}:`, filename);
-                console.error('  - Path:', imagePath);
-                console.error('  - Current src:', this.src);
-                console.error('  - Expected src:', imagePath);
-                console.error('  - Full URL:', window.location.href);
-                this.style.border = '2px solid rgba(255, 0, 0, 0.5)';
-                this.style.backgroundColor = 'rgba(255, 0, 0, 0.08)';
             };
 
             img.onload = function() {
-                const actualSrc = this.src;
-                const expectedFilename = filename;
-                console.log(`✓ Image ${index} loaded:`);
-                console.log('  - Filename:', expectedFilename);
-                console.log('  - Actual src:', actualSrc);
-                console.log('  - Natural size:', this.naturalWidth, 'x', this.naturalHeight);
-                
-                // Verify it's the correct image
-                if (!actualSrc.includes(expectedFilename.replace(' ', '%20'))) {
-                    console.warn('⚠️ Warning: Image src might not match filename!');
-                }
+                console.log(`✓ Image ${index} loaded:`, filename);
             };
             
-            // Force image to be visible BEFORE setting src
-            // Set src last to ensure all handlers are attached
             img.src = imagePath;
-            console.log(`Setting image ${index} src to:`, imagePath);
-            
-            // Double-check after a short delay
-            setTimeout(() => {
-                if (!img.complete || img.naturalWidth === 0) {
-                    console.warn(`Image ${index} may not have loaded:`, filename);
-                    console.warn('  - complete:', img.complete);
-                    console.warn('  - naturalWidth:', img.naturalWidth);
-                    console.warn('  - src:', img.src);
-                }
-            }, 1000);
-
             galleryItem.appendChild(img);
             galleryItem.addEventListener('click', () => openModal(filename, index + 1));
-            fragment.appendChild(galleryItem);
+            carouselTrack.appendChild(galleryItem);
         });
 
-        carouselTrack.appendChild(fragment);
         console.log('✓ Carousel track created with', imageFiles.length, 'items');
-        console.log('Carousel track children:', carouselTrack.children.length);
-        
-        // Force initial display - wait for images to load and DOM to be ready
-        setTimeout(() => {
-            updateCarousel();
-            console.log('Initial carousel update completed');
-            
-            // Double-check after images load
-            setTimeout(() => {
-                updateCarousel();
-                console.log('Carousel update after image load');
-            }, 500);
-        }, 100);
-        
-        // Update carousel on window resize
-        let resizeTimeout;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(() => {
-                console.log('Window resized, updating carousel');
-                updateCarousel();
-            }, 150);
-        });
     } else {
         console.error('❌ Carousel track element not found!');
-        console.error('Looking for element with ID: gallery-grid');
-        console.error('Available elements:', document.querySelectorAll('[id]'));
     }
 
     function updateCarousel() {
-        if (!carouselTrack) {
-            console.error('Carousel track not found in updateCarousel');
-            return;
-        }
+        if (!carouselTrack) return;
         
         // Ensure currentSlide is within bounds
-        if (currentSlide < 0) {
-            currentSlide = 0;
-        }
-        if (currentSlide >= imageFiles.length) {
-            currentSlide = imageFiles.length - 1;
-        }
+        if (currentSlide < 0) currentSlide = 0;
+        if (currentSlide >= imageFiles.length) currentSlide = imageFiles.length - 1;
         
-        // Use percentage-based transform - more reliable for flexbox layouts
+        // Use percentage-based transform
         const transformValue = -currentSlide * 100;
-        
-        // Apply transform with all browser prefixes
         carouselTrack.style.transform = `translateX(${transformValue}%)`;
         carouselTrack.style.webkitTransform = `translateX(${transformValue}%)`;
-        carouselTrack.style.msTransform = `translateX(${transformValue}%)`;
-        carouselTrack.style.OTransform = `translateX(${transformValue}%)`;
-        carouselTrack.style.MozTransform = `translateX(${transformValue}%)`;
-        
-        // Force reflow to ensure transform is applied
-        void carouselTrack.offsetWidth;
-        
-        console.log('Updating carousel - slide:', currentSlide, '/', imageFiles.length - 1, 'transform:', transformValue + '%');
-        
-        // Update active slide
-        const slides = carouselTrack.querySelectorAll('.gallery-item');
-        console.log('Total slides found:', slides.length);
-        slides.forEach((slide, index) => {
-            const isActive = index === currentSlide;
-            slide.classList.toggle('active', isActive);
-            if (isActive) {
-                console.log('Active slide:', index);
-            }
-        });
         
         // Update indicator
         if (currentImgElement) {
             currentImgElement.textContent = currentSlide + 1;
         }
         
-        // Preload adjacent images
-        preloadImages(currentSlide);
-    }
-
-    function preloadImages(currentIndex) {
-        [currentIndex - 1, currentIndex + 1].forEach(index => {
-            if (index >= 0 && index < imageFiles.length) {
-                const img = new Image();
-                img.src = `images/${imageFiles[index]}`;
-            }
-        });
+        console.log('Carousel updated - slide:', currentSlide + 1, '/', imageFiles.length, 'transform:', transformValue + '%');
     }
 
     function nextSlide() {
-        const oldSlide = currentSlide;
         currentSlide = (currentSlide + 1) % imageFiles.length;
-        console.log(`Moving from slide ${oldSlide} to slide ${currentSlide}`);
         updateCarousel();
     }
 
     function prevSlide() {
-        const oldSlide = currentSlide;
         currentSlide = (currentSlide - 1 + imageFiles.length) % imageFiles.length;
-        console.log(`Moving from slide ${oldSlide} to slide ${currentSlide}`);
         updateCarousel();
     }
 
     function startAutoPlay() {
-        if (autoPlayInterval) {
-            clearInterval(autoPlayInterval);
-        }
-        
-        console.log('Starting auto-play...');
+        if (autoPlayInterval) clearInterval(autoPlayInterval);
         autoPlayInterval = setInterval(() => {
             if (!isUserInteracting) {
-                console.log('Auto-play: moving to next slide');
                 nextSlide();
-            } else {
-                console.log('Auto-play paused: user is interacting');
             }
-        }, 3000); // 3 seconds
+        }, 3000);
     }
 
     function stopAutoPlay() {
@@ -256,8 +140,6 @@ document.addEventListener('DOMContentLoaded', () => {
     function pauseOnInteraction() {
         isUserInteracting = true;
         stopAutoPlay();
-        
-        // Resume after 10 seconds of no interaction
         setTimeout(() => {
             isUserInteracting = false;
             startAutoPlay();
@@ -285,7 +167,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (carouselTrack) {
         const carouselWrapper = carouselTrack.closest('.carousel-wrapper');
-        
         if (carouselWrapper) {
             carouselWrapper.addEventListener('touchstart', (e) => {
                 touchStartX = e.changedTouches[0].screenX;
@@ -294,23 +175,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             carouselWrapper.addEventListener('touchend', (e) => {
                 touchEndX = e.changedTouches[0].screenX;
-                handleSwipe();
+                const diff = touchStartX - touchEndX;
+                if (Math.abs(diff) > 50) {
+                    if (diff > 0) {
+                        nextSlide();
+                    } else {
+                        prevSlide();
+                    }
+                }
             }, { passive: true });
-        }
-    }
-
-    function handleSwipe() {
-        const swipeThreshold = 50;
-        const diff = touchStartX - touchEndX;
-
-        if (Math.abs(diff) > swipeThreshold) {
-            if (diff > 0) {
-                // Swipe right = next
-                nextSlide();
-            } else {
-                // Swipe left = previous
-                prevSlide();
-            }
         }
     }
 
@@ -325,40 +198,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Initialize - reset to first slide
+    // Initialize
     currentSlide = 0;
-    
-    // Wait a bit for DOM to be fully ready
     setTimeout(() => {
         updateCarousel();
         startAutoPlay();
-        console.log('Carousel initialized and started');
-    }, 200);
-    
-    // Debug: Check if images are visible
-    setTimeout(() => {
-        const items = carouselTrack.querySelectorAll('.gallery-item');
-        const images = carouselTrack.querySelectorAll('img');
-        console.log('Total items:', items.length);
-        console.log('Total images:', images.length);
-        console.log('Current slide:', currentSlide);
-        console.log('Transform:', carouselTrack.style.transform);
-        
-        images.forEach((img, idx) => {
-            if (idx < 3) {
-                console.log(`Image ${idx}:`, {
-                    src: img.src,
-                    complete: img.complete,
-                    naturalWidth: img.naturalWidth,
-                    naturalHeight: img.naturalHeight,
-                    offsetWidth: img.offsetWidth,
-                    offsetHeight: img.offsetHeight,
-                    display: window.getComputedStyle(img).display,
-                    visibility: window.getComputedStyle(img).visibility
-                });
-            }
-        });
-    }, 500);
+        console.log('Carousel initialized');
+    }, 300);
 
     // Pause on hover (desktop)
     const carouselWrapper = document.querySelector('.carousel-wrapper');
@@ -376,7 +222,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function openModal(filename, pageNumber) {
         if (!modal || !modalImg || !modalCaption) return;
-
         modalImg.src = `images/${filename}`;
         modalImg.alt = `איור מספר ${pageNumber} מתוך הספר דולב מלול`;
         modalCaption.textContent = `עמוד ${pageNumber} מתוך הספר "דולב מלול"`;
@@ -412,6 +257,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    const header = document.querySelector('.header');
+    const navToggle = document.querySelector('.nav-toggle');
+    const siteNav = document.querySelector('.site-nav');
+
     const updateHeaderState = () => {
         if (!header) return;
         header.classList.toggle('scrolled', window.scrollY > 20);
@@ -429,11 +278,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         siteNav.querySelectorAll('a').forEach((link) => {
             link.addEventListener('click', () => {
-                if (siteNav.classList.contains('is-open')) {
-                    siteNav.classList.remove('is-open');
-                    navToggle.setAttribute('aria-expanded', 'false');
-                    navToggle.classList.remove('is-open');
-                }
+                siteNav.classList.remove('is-open');
+                navToggle.setAttribute('aria-expanded', 'false');
+                navToggle.classList.remove('is-open');
             });
         });
     }
