@@ -8,6 +8,7 @@
     <title>דולב מלול | ספר בקרית שמונה</title>
     <meta name="description" content="דולב מלול - ספר בקרית שמונה. הכירו את המקום, הסגנון והאנשים שמגיעים לתספורת.">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="accessibility.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;600;700&family=Frank+Ruhl+Libre:wght@400;700&display=swap" rel="stylesheet">
@@ -148,6 +149,119 @@
         <div class="modal-caption" id="modal-caption"></div>
     </div>
 
+    <!-- כפתור נגישות -->
+    <div class="accessibility-widget" role="complementary" aria-label="תוסף נגישות">
+        <button class="accessibility-toggle" aria-label="פתיחת תפריט נגישות" aria-expanded="false" aria-haspopup="true">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" fill="currentColor"/>
+            </svg>
+            <span class="accessibility-label">נגישות</span>
+        </button>
+        <div class="accessibility-menu" role="menu" aria-label="תפריט נגישות">
+            <div class="accessibility-section">
+                <h3 class="accessibility-section-title">ניגודיות וצבע</h3>
+                <button class="accessibility-option" data-action="high-contrast" role="menuitem">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                        <path d="M12 2v20M2 12h20" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <span>ניגודיות גבוהה</span>
+                </button>
+                <button class="accessibility-option" data-action="grayscale" role="menuitem">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="2"/>
+                        <path d="M8 8h8M8 12h8M8 16h6" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <span>גווני אפור</span>
+                </button>
+                <button class="accessibility-option" data-action="underline-links" role="menuitem">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M6 4v6a6 6 0 0 0 12 0V4M4 20h16" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <span>הדגשת קישורים</span>
+                </button>
+            </div>
+            <div class="accessibility-section">
+                <h3 class="accessibility-section-title">טקסט</h3>
+                <div class="accessibility-controls">
+                    <button class="accessibility-option" data-action="text-size-decrease" role="menuitem" aria-label="הקטנת טקסט">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="M4 12h16M12 4v16" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        <span>א-</span>
+                    </button>
+                    <button class="accessibility-option" data-action="text-size-reset" role="menuitem" aria-label="גודל טקסט רגיל">
+                        <span>א</span>
+                    </button>
+                    <button class="accessibility-option" data-action="text-size-increase" role="menuitem" aria-label="הגדלת טקסט">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <path d="M12 4v16M4 12h16" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                        <span>א+</span>
+                    </button>
+                </div>
+                <button class="accessibility-option" data-action="readable-font" role="menuitem">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M4 20h16M4 4h16M4 12h16" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <span>גופן קריא</span>
+                </button>
+                <button class="accessibility-option" data-action="text-align-left" role="menuitem">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M3 6h18M3 12h12M3 18h18" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <span>יישור שמאל</span>
+                </button>
+            </div>
+            <div class="accessibility-section">
+                <h3 class="accessibility-section-title">נוחות</h3>
+                <button class="accessibility-option" data-action="highlight-focus" role="menuitem">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                        <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                    </svg>
+                    <span>פוקוס מודגש</span>
+                </button>
+                <button class="accessibility-option" data-action="read-aloud" role="menuitem">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M11 5L6 9H2v6h4l5 4V5zM19 10a7 7 0 0 1-2 5M15 10a3 3 0 0 1-.6 1.8" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <span>קריאה קולית</span>
+                </button>
+                <a href="#main-content" class="accessibility-option" role="menuitem">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <span>דלג לתוכן</span>
+                </a>
+            </div>
+            <div class="accessibility-section">
+                <h3 class="accessibility-section-title">תנועה</h3>
+                <button class="accessibility-option" data-action="stop-animations" role="menuitem">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <rect x="6" y="6" width="12" height="12" rx="2" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <span>חסימת אנימציות</span>
+                </button>
+            </div>
+            <div class="accessibility-section">
+                <a href="/accessibility-statement.html" class="accessibility-option accessibility-statement-link" role="menuitem">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M16 13H8M16 17H8M10 9H8" stroke="currentColor" stroke-width="2"/>
+                    </svg>
+                    <span>הצהרת נגישות</span>
+                </a>
+            </div>
+            <button class="accessibility-reset" data-action="reset-all" role="menuitem">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8M3 12v-4m0 4h4m16 0a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16m18 0v4m0-4h-4" stroke="currentColor" stroke-width="2"/>
+                </svg>
+                <span>איפוס הכל</span>
+            </button>
+        </div>
+    </div>
+
     <script src="script.js"></script>
+    <script src="accessibility.js"></script>
 </body>
 </html>
