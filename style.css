@@ -185,12 +185,6 @@ textarea:focus {
     animation: pole-scroll 12s linear infinite;
 }
 
-/* נגישות - אם המשתמש מבקש פחות תנועה, מבטלים אנימציה */
-@media (prefers-reduced-motion: reduce) {
-    .side-pole {
-        animation: none;
-    }
-}
 
 .container {
     width: min(1080px, 92%);
