@@ -172,19 +172,20 @@ document.addEventListener('DOMContentLoaded', () => {
             currentSlide = imageFiles.length - 1;
         }
         
-        // For horizontal carousel, use pixel-based transform for reliability
-        // Calculate transform based on slide width (more reliable than percentages)
-        const wrapper = document.getElementById('carousel-wrapper');
-        const slideWidth = wrapper ? wrapper.offsetWidth : 100;
-        const transformValue = -currentSlide * slideWidth;
+        // Use percentage-based transform - more reliable for flexbox layouts
+        const transformValue = -currentSlide * 100;
         
         // Apply transform with all browser prefixes
-        carouselTrack.style.transform = `translateX(${transformValue}px)`;
-        carouselTrack.style.webkitTransform = `translateX(${transformValue}px)`;
-        carouselTrack.style.msTransform = `translateX(${transformValue}px)`;
-        carouselTrack.style.MozTransform = `translateX(${transformValue}px)`;
+        carouselTrack.style.transform = `translateX(${transformValue}%)`;
+        carouselTrack.style.webkitTransform = `translateX(${transformValue}%)`;
+        carouselTrack.style.msTransform = `translateX(${transformValue}%)`;
+        carouselTrack.style.OTransform = `translateX(${transformValue}%)`;
+        carouselTrack.style.MozTransform = `translateX(${transformValue}%)`;
         
-        console.log('Updating carousel - slide:', currentSlide, '/', imageFiles.length - 1, 'transform:', transformValue + 'px', 'slideWidth:', slideWidth);
+        // Force reflow to ensure transform is applied
+        void carouselTrack.offsetWidth;
+        
+        console.log('Updating carousel - slide:', currentSlide, '/', imageFiles.length - 1, 'transform:', transformValue + '%');
         
         // Update active slide
         const slides = carouselTrack.querySelectorAll('.gallery-item');
