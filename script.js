@@ -120,11 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             };
             
-            // Set src last to ensure all handlers are attached
-            // Use relative path
-            img.src = imagePath;
-            
-            // Force image to be visible
+            // Force image to be visible BEFORE setting src
             img.style.cssText = `
                 display: block !important;
                 visibility: visible !important;
@@ -141,7 +137,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 z-index: 1 !important;
             `;
             
+            // Set src last to ensure all handlers are attached
+            img.src = imagePath;
             console.log(`Setting image ${index} src to:`, imagePath);
+            
+            // Double-check after a short delay
+            setTimeout(() => {
+                if (!img.complete || img.naturalWidth === 0) {
+                    console.warn(`Image ${index} may not have loaded:`, filename);
+                    console.warn('  - complete:', img.complete);
+                    console.warn('  - naturalWidth:', img.naturalWidth);
+                    console.warn('  - src:', img.src);
+                }
+            }, 1000);
 
             galleryItem.appendChild(img);
             galleryItem.addEventListener('click', () => openModal(filename, index + 1));
