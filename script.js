@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const galleryGrid = document.getElementById('gallery-grid');
+    console.log('DOM loaded, initializing carousel...');
+    
     const modal = document.getElementById('image-modal');
     const modalImg = document.getElementById('modal-img');
     const modalCaption = document.getElementById('modal-caption');
@@ -41,6 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     const carouselTrack = document.getElementById('gallery-grid');
+    console.log('Carousel track element:', carouselTrack);
     const currentImgElement = document.getElementById('current-img');
     const totalImgElement = document.getElementById('total-img');
     const prevBtn = document.getElementById('prevBtn');
@@ -55,6 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     if (carouselTrack) {
+        console.log('Creating carousel with', imageFiles.length, 'images');
         const fragment = document.createDocumentFragment();
 
         imageFiles.forEach((filename, index) => {
@@ -67,16 +70,26 @@ document.addEventListener('DOMContentLoaded', () => {
             const img = document.createElement('img');
             // Load first 3 images immediately, rest lazy
             img.loading = index < 3 ? 'eager' : 'lazy';
-            img.src = `images/${filename}`;
+            const imagePath = `images/${filename}`;
+            img.src = imagePath;
             img.alt = `דולב מלול - עמוד ${index + 1}`;
+            
+            // Add style to ensure visibility
+            img.style.display = 'block';
+            img.style.width = '100%';
+            img.style.height = 'auto';
+            img.style.maxWidth = '100%';
+            img.style.maxHeight = '100%';
 
             img.onerror = function handleImageError() {
-                console.error('Error loading image:', filename);
-                this.style.display = 'none';
+                console.error('Error loading image:', imagePath, filename);
+                console.error('Image element:', this);
+                this.style.border = '2px solid red';
+                this.style.backgroundColor = '#ff000020';
             };
 
             img.onload = function() {
-                console.log('Image loaded:', filename);
+                console.log('✓ Image loaded successfully:', filename);
             };
 
             galleryItem.appendChild(img);
@@ -85,9 +98,18 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         carouselTrack.appendChild(fragment);
-        console.log('Carousel track created with', imageFiles.length, 'images');
+        console.log('✓ Carousel track created with', imageFiles.length, 'items');
+        console.log('Carousel track children:', carouselTrack.children.length);
+        
+        // Force initial display
+        setTimeout(() => {
+            updateCarousel();
+            console.log('Initial carousel update completed');
+        }, 100);
     } else {
-        console.error('Carousel track element not found!');
+        console.error('❌ Carousel track element not found!');
+        console.error('Looking for element with ID: gallery-grid');
+        console.error('Available elements:', document.querySelectorAll('[id]'));
     }
 
     function updateCarousel() {
