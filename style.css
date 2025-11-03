@@ -103,12 +103,48 @@ a {
     align-items: center;
     justify-content: space-between;
     gap: 20px;
+    position: relative;
 }
 
 .logo {
     font-family: 'Frank Ruhl Libre', serif;
     font-size: 1.6rem;
     letter-spacing: 0.04em;
+}
+
+.header-logo {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+}
+
+.header-image {
+    height: 60px;
+    width: auto;
+    object-fit: contain;
+    display: block;
+}
+
+@media (max-width: 780px) {
+    .header-logo {
+        left: 60px;
+    }
+    
+    .header-image {
+        height: 50px;
+    }
+}
+
+@media (max-width: 560px) {
+    .header-logo {
+        left: 50px;
+    }
+    
+    .header-image {
+        height: 45px;
+    }
 }
 
 .site-nav {
