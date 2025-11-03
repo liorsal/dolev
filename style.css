@@ -315,40 +315,8 @@ a {
     display: flex;
     flex-direction: column;
     gap: 16px;
-    align-items: flex-start;
-}
-
-.frame {
-    position: relative;
-    border-radius: var(--radius-lg);
-    background: var(--bg-surface);
-    border: 1px solid var(--border);
-    padding: 18px;
-    box-shadow: var(--shadow);
-}
-
-.frame img {
-    display: block;
-    width: min(100%, 420px);
-    border-radius: var(--radius-md);
-    object-fit: cover;
-}
-
-.note {
-    display: inline-flex;
     align-items: center;
-    gap: 12px;
-    padding: 10px 18px;
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    color: var(--text-secondary);
-    font-size: 0.9rem;
-}
-
-.note strong {
-    color: var(--text-primary);
-    font-size: 1rem;
+    width: 100%;
 }
 
 .led-strip {
@@ -440,20 +408,12 @@ a {
 }
 
 /* Auto-playing horizontal carousel */
-.gallery-section {
-    padding: 60px 0 80px;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .carousel-container {
     position: relative;
     width: 100%;
-    max-width: 900px;
+    max-width: 420px;
     margin: 0 auto;
-    padding: 0 60px;
+    padding: 0 50px;
 }
 
 .carousel-wrapper {
@@ -543,14 +503,14 @@ a {
 }
 
 .gallery-indicator {
-    margin-top: 24px;
+    margin-top: 12px;
     background: rgba(13, 17, 23, 0.85);
     backdrop-filter: blur(10px);
     border: 1px solid var(--border);
-    padding: 10px 20px;
+    padding: 8px 16px;
     border-radius: 999px;
     color: var(--text-secondary);
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 600;
     pointer-events: none;
 }
@@ -560,28 +520,25 @@ a {
 }
 
 @media (max-width: 560px) {
-    .gallery-section {
-        padding: 40px 0 60px;
-    }
-
     .carousel-container {
-        padding: 0 50px;
+        padding: 0 45px;
+        max-width: 100%;
     }
 
     .carousel-btn {
-        width: 48px;
-        height: 48px;
+        width: 44px;
+        height: 44px;
     }
 
     .carousel-btn svg {
-        width: 24px;
-        height: 24px;
+        width: 20px;
+        height: 20px;
     }
 
     .gallery-indicator {
-        margin-top: 20px;
-        padding: 10px 18px;
-        font-size: 0.9rem;
+        margin-top: 10px;
+        padding: 8px 14px;
+        font-size: 0.8rem;
     }
 }
 
@@ -762,10 +719,8 @@ a {
     .hero-content,
     .hero-media {
         grid-column: auto;
-    }
-
-    .hero-media {
         align-items: center;
+        width: 100%;
     }
 
     .contact-layout {
@@ -820,9 +775,6 @@ a {
         padding: 24px 20px;
     }
 
-    .frame img {
-        width: 100%;
-    }
     
     .logo {
         font-size: 1.4rem;

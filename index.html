@@ -25,7 +25,6 @@
                 <ul class="nav-list">
                     <li><a href="#hero">ראשי</a></li>
                     <li><a href="#story">על הספר</a></li>
-                    <li><a href="#gallery">גלריה</a></li>
                     <li><a href="#contact" class="nav-cta">צור קשר</a></li>
                 </ul>
             </nav>
@@ -44,12 +43,26 @@
                     </p>
                     <div class="hero-actions">
                         <a class="btn primary" href="#story">הכירו את העלילה</a>
-                        <a class="btn secondary" href="#gallery">ראו איורים</a>
                     </div>
                 </div>
                 <div class="hero-media">
-                    <div class="frame">
-                        <img src="images/IMG_2310.JPG" alt="איור מקרית שמונה מתוך הספר דולב מלול">
+                    <div class="carousel-container">
+                        <div class="carousel-wrapper" id="carousel-wrapper">
+                            <div class="carousel-track" id="gallery-grid" aria-live="polite"></div>
+                        </div>
+                        <button class="carousel-btn prev-btn" id="prevBtn" aria-label="תמונה קודמת">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M15 18l-6-6 6-6"/>
+                            </svg>
+                        </button>
+                        <button class="carousel-btn next-btn" id="nextBtn" aria-label="תמונה הבאה">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 18l6-6-6-6"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="gallery-indicator">
+                        <span id="current-img">1</span> / <span id="total-img">29</span>
                     </div>
                 </div>
             </div>
@@ -76,32 +89,6 @@
         </section>
 
         <div class="led-strip" aria-hidden="true"></div>
-
-        <section class="gallery-section" id="gallery">
-            <div class="section-header center">
-                <span class="section-tag">איורים מתוך הספר</span>
-            </div>
-            <div class="carousel-container">
-                <div class="carousel-wrapper" id="carousel-wrapper">
-                    <div class="carousel-track" id="gallery-grid" aria-live="polite"></div>
-                </div>
-                <button class="carousel-btn prev-btn" id="prevBtn" aria-label="תמונה קודמת">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M15 18l-6-6 6-6"/>
-                    </svg>
-                </button>
-                <button class="carousel-btn next-btn" id="nextBtn" aria-label="תמונה הבאה">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M9 18l6-6-6-6"/>
-                    </svg>
-                </button>
-            </div>
-            <div class="gallery-indicator">
-                <span id="current-img">1</span> / <span id="total-img">29</span>
-            </div>
-        </section>
-
-        <div class="led-strip subtle" aria-hidden="true"></div>
 
         <section class="section contact" id="contact">
             <div class="container contact-layout">
