@@ -14,8 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const siteNav = document.querySelector('.site-nav');
     const navToggle = document.querySelector('.nav-toggle');
 
-    // Generate image file list: 1.png, 2.png, ... 17.png
-    const imageFiles = Array.from({ length: 17 }, (_, i) => `${i + 1}.png`);
+    // Generate image file list: 1.png, 2.png, ... 18.png
+    const imageFiles = Array.from({ length: 18 }, (_, i) => `${i + 1}.png`);
 
     let currentIndex = 0;
     const slideButtons = [];
