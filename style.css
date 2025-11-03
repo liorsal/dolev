@@ -202,6 +202,24 @@ a {
     .hero {
         padding: calc(var(--header-height) + 40px) 0 60px;
     }
+
+    .hero-layout {
+        gap: 28px;
+    }
+
+    .frame {
+        padding: 10px;
+        max-width: 360px;
+    }
+
+    .frame img {
+        max-height: clamp(180px, 48vw, 280px);
+    }
+
+    .note {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+    }
 }
 
 .hero-layout {
@@ -319,6 +337,38 @@ a {
     width: 100%;
 }
 
+/* Hero image wrapper: keeps top image modest and tidy */
+.frame {
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    background: var(--bg-surface);
+    box-shadow: var(--shadow);
+    padding: 14px;
+    width: 100%;
+    max-width: 460px;
+}
+
+.frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: clamp(200px, 38vw, 380px);
+    object-fit: contain;
+    border-radius: var(--radius-md);
+}
+
+.note {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
 .led-strip {
     height: 6px;
     margin: 0 auto;
@@ -407,144 +457,150 @@ a {
     margin: 0 auto 28px;
 }
 
-.carousel-container {
+.gallery-carousel {
     position: relative;
-    width: min(420px, 100%);
-    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    margin-bottom: 18px;
 }
 
-.carousel-wrapper {
-    position: relative;
+.carousel-window {
+    flex: 1;
     overflow: hidden;
     border-radius: var(--radius-lg);
     border: 1px solid var(--border);
     background: var(--bg-surface);
     box-shadow: var(--shadow);
-    height: clamp(320px, 60vh, 460px);
-    width: 100%;
+    height: clamp(260px, 55vw, 520px);
 }
 
 .carousel-track {
-    display: flex !important;
+    display: flex;
+    flex-wrap: nowrap;
     height: 100%;
-    transition: transform 0.45s ease;
     will-change: transform;
-    touch-action: pan-y;
-    position: relative;
-    transform: translateX(0);
+    transition: transform 0.45s ease;
+}
+
+.carousel-slide {
+    flex: 0 0 100%;
+    height: 100%;
+    display: flex;
     align-items: center;
-}
-
-.carousel-track .gallery-item {
-    flex: 0 0 100% !important;
-    width: 100% !important;
-    min-width: 100% !important;
-    max-width: 100% !important;
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    padding: 22px;
-    background: transparent;
-    position: relative;
+    justify-content: center;
+    padding: 20px;
     box-sizing: border-box;
-    flex-shrink: 0 !important;
-    overflow: visible !important;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    appearance: none;
 }
 
-.carousel-track .gallery-item img {
-    width: auto;
-    height: auto;
-    max-width: 100%;
-    max-height: 100%;
+.carousel-slide img {
+    width: 100%;
+    height: 100%;
     object-fit: contain;
-    border-radius: calc(var(--radius-md) - 6px);
-    box-shadow: 0 12px 24px rgba(4, 7, 20, 0.25);
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
+    border-radius: calc(var(--radius-md) - 4px);
+    box-shadow: 0 18px 32px rgba(5, 9, 24, 0.35);
+    background: #000;
 }
 
 .carousel-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
     width: 44px;
     height: 44px;
+    min-width: var(--touch-target);
+    min-height: var(--touch-target);
     border-radius: 50%;
     border: 1px solid rgba(255, 255, 255, 0.18);
-    background: rgba(13, 17, 23, 0.75);
+    background: rgba(13, 17, 23, 0.82);
     color: var(--text-primary);
     display: inline-flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: background 0.2s ease, box-shadow 0.2s ease;
-    z-index: 2;
+    flex-shrink: 0;
 }
 
 .carousel-btn:hover,
 .carousel-btn:focus {
-    background: rgba(19, 24, 32, 0.9);
-    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+    background: rgba(19, 24, 32, 0.95);
+    box-shadow: 0 12px 26px rgba(0, 0, 0, 0.35);
 }
 
-.prev-btn {
-    right: 12px;
+.carousel-btn span {
+    font-size: 1.6rem;
+    line-height: 1;
 }
 
-.next-btn {
-    left: 12px;
-}
-
-.carousel-btn svg {
-    width: 22px;
-    height: 22px;
-}
-
-.gallery-indicator {
-    margin-top: 14px;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 16px;
-    border-radius: 999px;
-    background: rgba(19, 24, 32, 0.82);
-    border: 1px solid var(--border);
+.carousel-indicator {
+    text-align: center;
     color: var(--text-secondary);
-    font-size: 0.85rem;
+    margin-bottom: 18px;
 }
 
-.gallery-indicator span {
+.carousel-indicator span {
     color: var(--text-primary);
     font-weight: 600;
 }
 
-@media (max-width: 640px) {
-    .carousel-wrapper {
-        height: clamp(260px, 58vh, 360px);
+.carousel-thumbs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+    gap: 12px;
+}
+
+.carousel-thumb {
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    overflow: hidden;
+    background: var(--bg-alt);
+    cursor: pointer;
+    transition: border-color 0.2s ease, transform 0.2s ease;
+    padding: 0;
+}
+
+.carousel-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.carousel-thumb.active {
+    border-color: rgba(58, 123, 213, 0.6);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 18px rgba(5, 9, 24, 0.3);
+}
+
+.carousel-thumb:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 4px;
+}
+
+@media (max-width: 860px) {
+    .gallery-carousel {
+        gap: 12px;
     }
 
-    .carousel-track .gallery-item {
-        padding: 18px;
+    .carousel-window {
+        height: clamp(240px, 60vw, 420px);
     }
 
     .carousel-btn {
         width: 40px;
         height: 40px;
     }
-
-    .prev-btn {
-        right: 8px;
-    }
-
-    .next-btn {
-        left: 8px;
-    }
 }
 
-@media (max-width: 420px) {
-    .carousel-container {
-        max-width: 300px;
+@media (max-width: 640px) {
+    .gallery-carousel {
+        gap: 8px;
+    }
+
+    .carousel-window {
+        height: clamp(220px, 62vw, 360px);
     }
 
     .carousel-btn {
@@ -552,14 +608,18 @@ a {
         height: 36px;
     }
 
-    .carousel-btn svg {
-        width: 18px;
-        height: 18px;
+    .carousel-btn span {
+        font-size: 1.4rem;
     }
 
-    .gallery-indicator {
-        font-size: 0.8rem;
-        padding: 6px 12px;
+    .carousel-thumbs {
+        grid-template-columns: repeat(auto-fit, minmax(68px, 1fr));
+    }
+}
+
+@media (max-width: 420px) {
+    .carousel-window {
+        height: clamp(200px, 58vw, 320px);
     }
 }
 
