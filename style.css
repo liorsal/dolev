@@ -417,7 +417,7 @@ a {
 }
 
 .carousel-wrapper {
-    overflow: hidden;
+    overflow: hidden !important;
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow);
     background: var(--bg-surface);
@@ -432,20 +432,19 @@ a {
     transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     will-change: transform;
     width: 100%;
-    transform: translateX(0) !important;
     position: relative;
 }
 
 .gallery-item {
-    min-width: 100%;
-    width: 100%;
+    min-width: 100% !important;
+    width: 100% !important;
     position: relative;
     display: flex !important;
     align-items: center;
     justify-content: center;
     background: var(--bg-main);
     cursor: pointer;
-    flex-shrink: 0;
+    flex-shrink: 0 !important;
     height: 500px;
     padding: 20px;
     box-sizing: border-box;

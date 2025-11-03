@@ -115,7 +115,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function updateCarousel() {
         if (!carouselTrack) return;
         
-        carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+        // Calculate the transform value
+        const transformValue = -currentSlide * 100;
+        carouselTrack.style.transform = `translateX(${transformValue}%)`;
+        carouselTrack.style.webkitTransform = `translateX(${transformValue}%)`;
+        
+        console.log('Updating carousel - slide:', currentSlide, 'transform:', transformValue + '%');
         
         // Update active slide
         const slides = carouselTrack.querySelectorAll('.gallery-item');
