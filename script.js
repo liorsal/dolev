@@ -14,8 +14,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const siteNav = document.querySelector('.site-nav');
     const navToggle = document.querySelector('.nav-toggle');
 
-    // Generate image file list: 1.png, 2.png, ... 16.png
-    const imageFiles = Array.from({ length: 16 }, (_, i) => `${i + 1}.png`);
+    // Image files: 1.png through 10.png, then 13.png through 18.png (missing 11.png and 12.png)
+    const imageFiles = [
+        '1.png', '2.png', '3.png', '4.png', '5.png', '6.png', '7.png', '8.png', '9.png', '10.png',
+        '13.png', '14.png', '15.png', '16.png', '17.png', '18.png'
+    ];
 
     let currentIndex = 0;
     const slideButtons = [];
