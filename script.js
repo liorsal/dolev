@@ -73,7 +73,8 @@ document.addEventListener('DOMContentLoaded', () => {
             img.loading = index < 3 ? 'eager' : 'lazy';
             
             // Create the image path - handle spaces in filenames
-            const imagePath = `images/${encodeURIComponent(filename)}`;
+            // Use simple path without encoding for local files
+            const imagePath = `images/${filename}`;
             
             // Set attributes first
             img.alt = `דולב מלול - עמוד ${index + 1}`;
