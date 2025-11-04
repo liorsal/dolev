@@ -318,16 +318,14 @@ document.addEventListener('DOMContentLoaded', () => {
             // קידוד הודעה ל-URL
             const encodedMessage = encodeURIComponent(message);
             
-            // פתיחת WhatsApp עם הודעה מוכנה
-            // Quick link של WhatsApp לא תומך בפרמטר text
-            // לכן נשתמש ב-api.whatsapp.com/send עם הטקסט בלבד
-            // המשתמש יפתח WhatsApp עם הטקסט מוכן ויצטרך לבחור את דולב מהרשימה
-            // או לחלופין, אם יש מספר טלפון: https://api.whatsapp.com/send?phone=972XXXXXXXXX&text=...
+            // פתיחת WhatsApp עם הודעה מוכנה ישירות לדולב
+            // מספר טלפון בפורמט בינלאומי: 0525222787 -> 972525222787
+            const phoneNumber = '972525222787'; // דולב מלול
             
-            // פתיחת WhatsApp עם הטקסט מוכן (ללא מספר טלפון - המשתמש יבחר את דולב)
-            const whatsappUrl = `https://api.whatsapp.com/send?text=${encodedMessage}`;
+            // פתיחת WhatsApp עם הטקסט מוכן ישירות למספר של דולב
+            const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
             
-            // פתח WhatsApp Web/App עם הטקסט מוכן
+            // פתח WhatsApp Web/App עם הטקסט מוכן - ההודעה תישלח ישירות לדולב
             window.open(whatsappUrl, '_blank');
             
             // איפוס הטופס
