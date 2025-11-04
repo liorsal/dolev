@@ -1118,6 +1118,7 @@ textarea:focus {
         max-width: 100%;
         justify-content: center;
         margin: 0 auto;
+        padding-right: 20px;
     }
     
     .contact-layout > div:first-child .section-header {
@@ -1127,16 +1128,19 @@ textarea:focus {
         max-width: 100%;
         justify-content: center;
         margin: 0 auto;
+        padding-right: 20px;
     }
     
     .contact-layout > div:first-child .section-header h2 {
         text-align: center;
         margin: 0 auto;
         width: 100%;
+        padding-right: 20px;
     }
     
     .contact-layout > div:first-child .section-tag {
         margin: 0 auto;
+        padding-right: 20px;
     }
     
     .contact-layout > div:first-child p {
@@ -1144,6 +1148,7 @@ textarea:focus {
         max-width: 100%;
         margin: 0 auto;
         width: 100%;
+        padding-right: 20px;
     }
 }
 
