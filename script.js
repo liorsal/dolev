@@ -250,6 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 // אם ההבדל קטן או שווה ל-30 דקות, התור תפוס
                 if (timeDiff <= 30) {
+                    console.log(`תור תפוס: ${time} קרוב מדי ל-${bookingTime} (הבדל: ${timeDiff} דקות)`);
                     return true;
                 }
             }
@@ -331,7 +332,38 @@ document.addEventListener('DOMContentLoaded', () => {
         const isTaken = await isTimeSlotTaken(dateInput.value, timeInput.value);
         
         if (isTaken) {
-            timeInput.setCustomValidity('תור זה תפוס או קרוב מדי לתור אחר. אנא בחרו תאריך או שעה אחרת (חייב להיות לפחות חצי שעה בין תורים).');
+            // נסה למצוא איזה תור תפוס קרוב כדי לתת הודעה ברורה יותר
+            try {
+                const { collection, query, where, getDocs } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
+                const bookingsRef = collection(window.firebaseDb, 'bookings');
+                const q = query(bookingsRef, where('date', '==', dateInput.value));
+                const querySnapshot = await getDocs(q);
+                
+                const requestedTimeMinutes = timeToMinutes(timeInput.value);
+                let closestTime = null;
+                let minDiff = Infinity;
+                
+                querySnapshot.forEach((doc) => {
+                    const bookingTime = doc.data().time;
+                    const bookingTimeMinutes = timeToMinutes(bookingTime);
+                    const timeDiff = Math.abs(requestedTimeMinutes - bookingTimeMinutes);
+                    
+                    if (timeDiff <= 30 && timeDiff < minDiff) {
+                        minDiff = timeDiff;
+                        closestTime = bookingTime;
+                    }
+                });
+                
+                let errorMessage = 'תור זה תפוס או קרוב מדי לתור אחר. אנא בחרו תאריך או שעה אחרת (חייב להיות לפחות חצי שעה בין תורים).';
+                if (closestTime) {
+                    errorMessage = `תור זה תפוס! יש כבר תור ב-${closestTime} (${minDiff} דקות מהזמן שביקשת). אנא בחרו תאריך או שעה אחרת (חייב להיות לפחות חצי שעה בין תורים).`;
+                }
+                
+                timeInput.setCustomValidity(errorMessage);
+            } catch (error) {
+                console.error('Error getting booking details:', error);
+                timeInput.setCustomValidity('תור זה תפוס או קרוב מדי לתור אחר. אנא בחרו תאריך או שעה אחרת (חייב להיות לפחות חצי שעה בין תורים).');
+            }
             timeInput.classList.add('error');
             if (submitButton) {
                 submitButton.disabled = true;
@@ -396,7 +428,37 @@ document.addEventListener('DOMContentLoaded', () => {
             if (window.firebaseDb) {
                 const isTaken = await isTimeSlotTaken(date, time);
                 if (isTaken) {
-                    alert('תור זה תפוס או קרוב מדי לתור אחר. אנא בחרו תאריך או שעה אחרת (חייב להיות לפחות חצי שעה בין תורים).');
+                    // בדוק איזה תור תפוס קרוב כדי לתת הודעה ברורה יותר
+                    try {
+                        const { collection, query, where, getDocs } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
+                        const bookingsRef = collection(window.firebaseDb, 'bookings');
+                        const q = query(bookingsRef, where('date', '==', date));
+                        const querySnapshot = await getDocs(q);
+                        
+                        const requestedTimeMinutes = timeToMinutes(time);
+                        let closestTime = null;
+                        let minDiff = Infinity;
+                        
+                        querySnapshot.forEach((doc) => {
+                            const bookingTime = doc.data().time;
+                            const bookingTimeMinutes = timeToMinutes(bookingTime);
+                            const timeDiff = Math.abs(requestedTimeMinutes - bookingTimeMinutes);
+                            
+                            if (timeDiff <= 30 && timeDiff < minDiff) {
+                                minDiff = timeDiff;
+                                closestTime = bookingTime;
+                            }
+                        });
+                        
+                        if (closestTime) {
+                            alert(`תור זה תפוס! יש כבר תור ב-${closestTime} (${minDiff} דקות מהזמן שביקשת). אנא בחרו תאריך או שעה אחרת (חייב להיות לפחות חצי שעה בין תורים).`);
+                        } else {
+                            alert('תור זה תפוס או קרוב מדי לתור אחר. אנא בחרו תאריך או שעה אחרת (חייב להיות לפחות חצי שעה בין תורים).');
+                        }
+                    } catch (error) {
+                        console.error('Error getting booking details:', error);
+                        alert('תור זה תפוס או קרוב מדי לתור אחר. אנא בחרו תאריך או שעה אחרת (חייב להיות לפחות חצי שעה בין תורים).');
+                    }
                     return;
                 }
             }
