@@ -1041,22 +1041,72 @@ textarea:focus {
     grid-template-columns: repeat(12, 1fr);
     gap: 32px;
     align-items: start;
+    justify-items: center;
+}
+
+@media (max-width: 768px) {
+    .contact-layout {
+        justify-items: center;
+        gap: 24px;
+    }
+}
+
+@media (max-width: 560px) {
+    .contact-layout {
+        justify-items: center;
+        gap: 20px;
+    }
 }
 
 .contact-layout > div:first-child {
     grid-column: span 12;
     color: var(--text-secondary);
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 @media (max-width: 768px) {
+    .contact-layout {
+        justify-items: center;
+    }
+    
     .contact-layout > div:first-child {
         text-align: center;
+        align-items: center;
+        width: 100%;
+        max-width: 100%;
     }
     
     .contact-layout > div:first-child .section-header {
         align-items: center;
         text-align: center;
+        width: 100%;
+    }
+    
+    .contact-layout > div:first-child p {
+        text-align: center;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 560px) {
+    .contact-layout {
+        justify-items: center;
+    }
+    
+    .contact-layout > div:first-child {
+        text-align: center;
+        align-items: center;
+        width: 100%;
+    }
+    
+    .contact-layout > div:first-child .section-header {
+        align-items: center;
+        text-align: center;
+        width: 100%;
     }
     
     .contact-layout > div:first-child p {
@@ -1078,23 +1128,29 @@ textarea:focus {
 @media (max-width: 768px) {
     .contact-cards {
         grid-template-columns: 1fr;
-        max-width: 300px;
+        max-width: 250px;
         margin: 32px auto 0;
-        gap: 16px;
+        gap: 14px;
         width: 100%;
         justify-items: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 }
 
 @media (max-width: 560px) {
     .contact-cards {
         grid-template-columns: 1fr;
-        max-width: 280px;
-        gap: 14px;
+        max-width: 240px;
+        gap: 12px;
         margin-top: 28px;
         margin-left: auto;
         margin-right: auto;
         width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 }
 
@@ -1160,6 +1216,23 @@ textarea:focus {
     margin-top: 40px;
     display: flex;
     justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .booking-form-container {
+        margin-top: 32px;
+        width: 100%;
+    }
+}
+
+@media (max-width: 560px) {
+    .booking-form-container {
+        margin-top: 28px;
+        width: 100%;
+        padding: 0;
+    }
 }
 
 .booking-form {
@@ -1176,16 +1249,22 @@ textarea:focus {
 
 @media (max-width: 768px) {
     .booking-form {
-        max-width: 500px;
-        padding: 28px;
+        max-width: 300px;
+        padding: 24px;
+        margin: 0 auto;
     }
 }
 
 @media (max-width: 560px) {
     .booking-form {
-        max-width: 90%;
-        padding: 24px 20px;
-        gap: 16px;
+        max-width: 280px;
+        padding: 20px 16px;
+        gap: 14px;
+        margin: 0 auto;
+    }
+    
+    .booking-form h3 {
+        font-size: 1.2rem;
     }
 }
 
@@ -1195,6 +1274,13 @@ textarea:focus {
     margin-bottom: 8px;
     font-family: 'Frank Ruhl Libre', serif;
     text-align: center;
+}
+
+@media (max-width: 560px) {
+    .booking-form h3 {
+        font-size: 1.1rem;
+        margin-bottom: 6px;
+    }
 }
 
 @media (max-width: 768px) {
