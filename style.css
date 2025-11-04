@@ -1372,11 +1372,11 @@ textarea:focus {
 @media (max-width: 560px) {
     .booking-form {
         max-width: 330px;
-        width: 300px;
+        width: 330px;
         padding: 24px 20px;
         gap: 16px;
         margin: 0 auto;
-        margin-right: 40px;
+        margin-right: 50px;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
