@@ -516,24 +516,40 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // פתח WhatsApp Web/App עם הטקסט מוכן - ההודעה תישלח ישירות לדולב
             // משתמשים בגישה שעובדת בכל הדפדפנים (כולל Safari, Firefox, Edge)
-            try {
-                // נסה ליצור קישור ולקליק עליו programmatically - זה עובד טוב בכל הדפדפנים
-                // גישה זו עובדת טוב יותר מ-window.open כי היא לא נחסמת ב-popup blocker
-                const link = document.createElement('a');
-                link.href = whatsappUrl;
-                link.target = '_blank';
-                link.rel = 'noopener noreferrer';
-                link.style.display = 'none';
-                document.body.appendChild(link);
-                link.click();
-                // נסיר את הקישור אחרי הקליק
-                setTimeout(() => {
-                    document.body.removeChild(link);
-                }, 100);
-            } catch (error) {
-                // אם יש שגיאה, נשתמש ב-location.assign כגיבוי
-                console.error('Error opening WhatsApp:', error);
-                window.location.assign(whatsappUrl);
+            // Safari חוסם window.open ו-link.click(), אז נשתמש ב-location.href ישירות
+            // בדוק אם זה ספארי
+            const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+            
+            if (isSafari) {
+                // בספארי, נשתמש ב-location.href ישירות - זה עובד הכי טוב
+                window.location.href = whatsappUrl;
+            } else {
+                // בדפדפנים אחרים (כרום, פיירפוקס), ננסה לפתוח בחלון חדש
+                try {
+                    const newWindow = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+                    
+                    // אם popup נחסם, נשתמש ב-location.href
+                    if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+                        window.location.href = whatsappUrl;
+                    } else {
+                        // אם נפתח בחלון חדש, נבדוק אחרי זמן קצר אם זה באמת נפתח
+                        setTimeout(() => {
+                            try {
+                                if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+                                    // החלון נסגר או נחסם, נשתמש ב-location.href
+                                    window.location.href = whatsappUrl;
+                                }
+                            } catch (e) {
+                                // אם יש שגיאה, נשתמש ב-location.href
+                                window.location.href = whatsappUrl;
+                            }
+                        }, 100);
+                    }
+                } catch (error) {
+                    // אם יש שגיאה, נשתמש ב-location.href ישירות
+                    console.error('Error opening WhatsApp:', error);
+                    window.location.href = whatsappUrl;
+                }
             }
         });
     }
