@@ -445,14 +445,26 @@ document.addEventListener('DOMContentLoaded', () => {
             // פתיחת WhatsApp עם הטקסט מוכן ישירות למספר של דולב
             const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
             
-            // פתח WhatsApp Web/App עם הטקסט מוכן - ההודעה תישלח ישירות לדולב
-            window.open(whatsappUrl, '_blank');
-            
-            // איפוס הטופס
+            // איפוס הטופס לפני מעבר לווצאפ
             bookingForm.reset();
             if (dateInput) {
                 const today = new Date().toISOString().split('T')[0];
                 dateInput.setAttribute('min', today);
+            }
+            
+            // פתח WhatsApp Web/App עם הטקסט מוכן - ההודעה תישלח ישירות לדולב
+            // משתמשים ב-window.location.href במקום window.open כדי להימנע מחסימת popup
+            try {
+                // נסה לפתוח בחלון חדש
+                const newWindow = window.open(whatsappUrl, '_blank');
+                // אם popup נחסם, נשתמש ב-location.href
+                if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
+                    window.location.href = whatsappUrl;
+                }
+            } catch (error) {
+                // אם יש שגיאה, נשתמש ב-location.href
+                console.error('Error opening WhatsApp:', error);
+                window.location.href = whatsappUrl;
             }
         });
     }
