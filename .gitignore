@@ -8,3 +8,7 @@ Thumbs.db
 *.swp
 *.swo
 
+# Node modules
+node_modules/
+package-lock.json
+
