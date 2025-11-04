@@ -485,7 +485,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             
             // בניית הודעה ל-WhatsApp
-            let message = `שלום! אני מעוניין/ת לתאם תור:\n\n`;
+            let message = `שלום! תיאמתי תור:\n\n`;
             message += `👤 שם: ${name}\n`;
             message += `📞 טלפון: ${phone}\n`;
             message += `📅 תאריך: ${formattedDate}\n`;
