@@ -1117,39 +1117,32 @@ textarea:focus {
 
 .contact-cards {
     grid-column: span 12;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    display: flex;
+    flex-direction: column;
     gap: 18px;
     margin-top: 32px;
-    justify-items: center;
+    align-items: center;
     width: 100%;
 }
 
 @media (max-width: 768px) {
     .contact-cards {
-        grid-template-columns: 1fr;
         max-width: 250px;
         margin: 32px auto 0;
         gap: 14px;
         width: 100%;
-        justify-items: center;
-        display: flex;
-        flex-direction: column;
         align-items: center;
     }
 }
 
 @media (max-width: 560px) {
     .contact-cards {
-        grid-template-columns: 1fr;
         max-width: 240px;
         gap: 12px;
         margin-top: 28px;
         margin-left: auto;
         margin-right: auto;
         width: 100%;
-        display: flex;
-        flex-direction: column;
         align-items: center;
     }
 }
@@ -1249,22 +1242,47 @@ textarea:focus {
 
 @media (max-width: 768px) {
     .booking-form {
-        max-width: 300px;
-        padding: 24px;
+        max-width: 280px;
+        padding: 20px;
         margin: 0 auto;
+        gap: 16px;
+    }
+    
+    .booking-form h3 {
+        font-size: 1.2rem;
     }
 }
 
 @media (max-width: 560px) {
     .booking-form {
-        max-width: 280px;
-        padding: 20px 16px;
-        gap: 14px;
+        max-width: 85%;
+        padding: 16px 14px;
+        gap: 12px;
         margin: 0 auto;
     }
     
     .booking-form h3 {
-        font-size: 1.2rem;
+        font-size: 1rem;
+        margin-bottom: 4px;
+    }
+    
+    .form-group {
+        gap: 6px;
+    }
+    
+    .form-group label {
+        font-size: 0.85rem;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+    
+    .booking-submit {
+        padding: 14px 20px;
+        font-size: 0.9rem;
     }
 }
 
