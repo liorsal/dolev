@@ -193,6 +193,60 @@ textarea:focus {
     z-index: 2;
 }
 
+@media (max-width: 768px) {
+    .container {
+        width: 100%;
+        padding: 0 20px;
+    }
+}
+
+@media (max-width: 560px) {
+    .container {
+        padding: 0 16px;
+    }
+    
+    /* מירכוז כל התוכן בנייד */
+    .section-header {
+        text-align: center;
+    }
+    
+    .section-header h1,
+    .section-header h2 {
+        text-align: center;
+    }
+    
+    .contact-layout > div:first-child p {
+        text-align: center;
+    }
+    
+    .booking-form h3 {
+        text-align: center;
+    }
+    
+    .hero-content {
+        align-items: center;
+        text-align: center;
+    }
+    
+    .sidebar-content {
+        text-align: center;
+    }
+    
+    .sidebar-content h3 {
+        text-align: center;
+    }
+    
+    .sidebar-content ul {
+        text-align: center;
+        list-style: none;
+        padding: 0;
+    }
+    
+    .sidebar-content li {
+        text-align: center;
+    }
+}
+
 @media (max-width: 1024px) {
     :root {
         --pole-width: 24px;
@@ -504,6 +558,30 @@ textarea:focus {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    padding: 0;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .hours-list,
+    .services-list {
+        align-items: center;
+        width: 100%;
+    }
+    
+    .hours-list li,
+    .services-list li {
+        text-align: center;
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 560px) {
+    .hours-list li,
+    .services-list li {
+        text-align: center;
+    }
 }
 
 .hours-list li {
@@ -744,7 +822,7 @@ textarea:focus {
 
 @media (max-width: 560px) {
     .section {
-        padding: 60px 0;
+        padding: 50px 0;
     }
 }
 
@@ -760,6 +838,22 @@ textarea:focus {
     text-align: center;
 }
 
+@media (max-width: 768px) {
+    .section-header {
+        align-items: center;
+        text-align: center;
+        gap: 14px;
+        margin-bottom: 32px;
+    }
+}
+
+@media (max-width: 560px) {
+    .section-header {
+        margin-bottom: 28px;
+        gap: 12px;
+    }
+}
+
 .section-tag {
     display: inline-flex;
     align-items: center;
@@ -773,10 +867,26 @@ textarea:focus {
     text-transform: uppercase;
 }
 
+.section h1,
 .section h2 {
     font-family: 'Frank Ruhl Libre', serif;
     font-size: clamp(1.8rem, 4vw, 3rem);
     line-height: 1.3;
+}
+
+@media (max-width: 768px) {
+    .section h1,
+    .section h2 {
+        text-align: center;
+    }
+}
+
+@media (max-width: 560px) {
+    .section h1,
+    .section h2 {
+        text-align: center;
+        margin-bottom: 20px;
+    }
 }
 
 @media (max-width: 560px) {
@@ -884,6 +994,23 @@ textarea:focus {
 .contact-layout > div:first-child {
     grid-column: span 12;
     color: var(--text-secondary);
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .contact-layout > div:first-child {
+        text-align: center;
+    }
+    
+    .contact-layout > div:first-child .section-header {
+        align-items: center;
+        text-align: center;
+    }
+    
+    .contact-layout > div:first-child p {
+        text-align: center;
+        max-width: 100%;
+    }
 }
 
 .contact-cards {
@@ -892,6 +1019,23 @@ textarea:focus {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 18px;
     margin-top: 32px;
+    justify-items: center;
+}
+
+@media (max-width: 768px) {
+    .contact-cards {
+        grid-template-columns: 1fr;
+        max-width: 400px;
+        margin: 32px auto 0;
+        gap: 16px;
+    }
+}
+
+@media (max-width: 560px) {
+    .contact-cards {
+        gap: 14px;
+        margin-top: 28px;
+    }
 }
 
 .contact-card {
@@ -903,11 +1047,21 @@ textarea:focus {
     flex-direction: column;
     gap: 10px;
     color: var(--text-secondary);
+    align-items: center;
+    text-align: center;
 }
 
 .contact-card h3 {
     color: var(--text-primary);
     font-size: 1.05rem;
+}
+
+@media (max-width: 560px) {
+    .contact-card {
+        padding: 20px;
+        width: 100%;
+        max-width: 320px;
+    }
 }
 
 .contact-card a {
@@ -944,6 +1098,8 @@ textarea:focus {
 .booking-form-container {
     grid-column: span 12;
     margin-top: 40px;
+    display: flex;
+    justify-content: center;
 }
 
 .booking-form {
@@ -954,6 +1110,8 @@ textarea:focus {
     display: flex;
     flex-direction: column;
     gap: 20px;
+    width: 100%;
+    max-width: 600px;
 }
 
 .booking-form h3 {
@@ -961,6 +1119,18 @@ textarea:focus {
     font-size: 1.5rem;
     margin-bottom: 8px;
     font-family: 'Frank Ruhl Libre', serif;
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+    .booking-form-container {
+        margin-top: 32px;
+    }
+    
+    .booking-form {
+        padding: 28px;
+        max-width: 100%;
+    }
 }
 
 .form-group {
@@ -1020,6 +1190,14 @@ textarea:focus {
     padding: 16px 32px;
     font-size: 1.05rem;
     font-weight: 600;
+    width: 100%;
+}
+
+@media (max-width: 560px) {
+    .booking-submit {
+        padding: 18px 24px;
+        font-size: 1rem;
+    }
 }
 
 .booking-submit svg {
