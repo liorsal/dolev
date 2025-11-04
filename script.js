@@ -516,7 +516,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // פתח WhatsApp Web/App עם הטקסט מוכן - ההודעה תישלח ישירות לדולב
             // משתמשים בגישה שעובדת בכל הדפדפנים (כולל Safari, Firefox, Edge)
-            // Safari חוסם window.open, אז נשתמש ב-location.href ישירות
+            // Safari חוסם window.open, אז נשתמש ב-location.replace ישירות
             // נבדוק אם זה ספארי
             const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent) || 
                            (navigator.vendor && navigator.vendor.indexOf('Apple') > -1 && 
@@ -524,9 +524,16 @@ document.addEventListener('DOMContentLoaded', () => {
                             !navigator.userAgent.match('FxiOS'));
             
             if (isSafari) {
-                // בספארי, נשתמש ב-location.href ישירות - זה הכי אמין
-                // ספארי חוסם window.open ו-link.click(), אז נשתמש ב-location.href
-                window.location.href = whatsappUrl;
+                // בספארי, נשתמש ב-location.replace במקום location.href
+                // location.replace עובד טוב יותר בספארי כי הוא לא מוסיף את הדף להיסטוריה
+                // אם זה לא עובד, ננסה location.href
+                try {
+                    window.location.replace(whatsappUrl);
+                } catch (error) {
+                    console.error('Error with location.replace in Safari:', error);
+                    // אם יש שגיאה, ננסה location.href
+                    window.location.href = whatsappUrl;
+                }
             } else {
                 // בדפדפנים אחרים (כרום, פיירפוקס), ננסה לפתוח בחלון חדש
                 try {
