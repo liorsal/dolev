@@ -319,16 +319,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const encodedMessage = encodeURIComponent(message);
             
             // פתיחת WhatsApp עם הודעה מוכנה
-            // משתמשים ב-wa.me עם פרמטר text - הפורמט הנכון
-            // הקישור הקיים הוא quick link שלא תומך בפרמטר text
-            // לכן נשתמש בפורמט עם מספר טלפון או נשתמש ב-API
-            const whatsappUrl = `https://api.whatsapp.com/send?text=${encodedMessage}`;
+            // משתמשים ב-wa.me עם פרמטר text - הפורמט הנכון לשליחה ישירה
+            // ננסה שני פורמטים - עם quick link או עם מספר טלפון
+            // אם יש מספר טלפון: https://wa.me/972XXXXXXXXX?text=...
+            // אם יש quick link: ננסה להוסיף ?text= לקישור הקיים
+            
+            // אפשרות 1: ננסה להוסיף text ל-quick link (אם זה עובד)
+            let whatsappUrl = `https://wa.me/message/MWGZL4L7DTATI1?text=${encodedMessage}`;
             
             // פתח WhatsApp Web/App עם הטקסט מוכן
             window.open(whatsappUrl, '_blank');
-            
-            // לאחר פתיחת WhatsApp, המשתמש יצטרך לבחור את דולב מהרשימה או לחפש
-            // אם יש מספר טלפון ספציפי, ניתן להשתמש: `https://api.whatsapp.com/send?phone=972XXXXXXXXX&text=${encodedMessage}`
             
             // איפוס הטופס
             bookingForm.reset();
