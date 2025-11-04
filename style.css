@@ -130,18 +130,17 @@ textarea:focus {
     position: fixed;
     inset: 0;
     background:
-        url('logo.JPG') center center / cover no-repeat,
-        radial-gradient(circle at top right, rgba(58, 123, 213, 0.08), transparent 55%),
-        radial-gradient(circle at bottom left, rgba(255, 255, 255, 0.05), transparent 60%);
-    background-blend-mode: overlay;
+        url('new_background.JPG') center center / cover no-repeat,
+        var(--bg-main);
     z-index: -1;
+    pointer-events: none;
 }
 
 .page-background::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: rgba(13, 17, 23, 0.85);
+    background: rgba(13, 17, 23, 0.3);
     z-index: 0;
 }
 
