@@ -228,7 +228,7 @@ textarea:focus {
     top: 0;
     backdrop-filter: blur(12px);
     background: 
-        url('background.JPG') center center / cover no-repeat,
+        url('background.JPG') center center / contain no-repeat,
         rgba(13, 17, 23, 0.85);
     border-bottom: 1px solid var(--border);
     height: var(--header-height);
@@ -248,7 +248,7 @@ textarea:focus {
 
 .site-header.scrolled {
     background: 
-        url('background.JPG') center center / cover no-repeat,
+        url('background.JPG') center center / contain no-repeat,
         rgba(13, 17, 23, 0.95);
     box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
 }
