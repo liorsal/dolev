@@ -1052,12 +1052,16 @@ textarea:focus {
     gap: 32px;
     align-items: start;
     justify-items: center;
+    width: 100%;
+    max-width: 100%;
 }
 
 @media (max-width: 768px) {
     .contact-layout {
         justify-items: center;
         gap: 24px;
+        width: 100%;
+        max-width: 100%;
     }
 }
 
@@ -1065,6 +1069,12 @@ textarea:focus {
     .contact-layout {
         justify-items: center;
         gap: 20px;
+        width: 100%;
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
 }
 
@@ -1318,7 +1328,7 @@ textarea:focus {
 
 @media (max-width: 560px) {
     .booking-form {
-        max-width: 300px;
+        max-width: 330px;
         width: 300px;
         padding: 24px 20px;
         gap: 16px;
