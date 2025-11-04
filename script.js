@@ -168,4 +168,56 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+
+    // טופס הזמנת תור - שליחה ל-WhatsApp
+    const bookingForm = document.getElementById('booking-form');
+    const dateInput = document.getElementById('booking-date');
+    
+    // הגדר תאריך מינימלי להיום
+    if (dateInput) {
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.setAttribute('min', today);
+    }
+
+    if (bookingForm) {
+        bookingForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(bookingForm);
+            const name = formData.get('name');
+            const phone = formData.get('phone');
+            const date = formData.get('date');
+            const time = formData.get('time');
+            const notes = formData.get('notes') || '';
+            
+            // פורמט תאריך לעברית
+            const dateObj = new Date(date);
+            const formattedDate = dateObj.toLocaleDateString('he-IL', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+            
+            // בניית הודעה ל-WhatsApp
+            let message = `שלום! אני מעוניין/ת לתאם תור:\n\n`;
+            message += `👤 שם: ${name}\n`;
+            message += `📞 טלפון: ${phone}\n`;
+            message += `📅 תאריך: ${formattedDate}\n`;
+            message += `🕐 שעה: ${time}\n`;
+            
+            if (notes.trim()) {
+                message += `📝 הערות: ${notes}\n`;
+            }
+            
+            message += `\nתודה!`;
+            
+            // קידוד הודעה ל-URL
+            const encodedMessage = encodeURIComponent(message);
+            
+            // פתיחת WhatsApp עם הודעה מוכנה
+            const whatsappUrl = `https://wa.me/message/MWGZL4L7DTATI1?text=${encodedMessage}`;
+            window.open(whatsappUrl, '_blank');
+        });
+    }
 });
