@@ -302,7 +302,7 @@ textarea:focus {
 @media (max-width: 768px) {
     .site-header {
         background: 
-            url('header_background.JPG') center center / 250% auto no-repeat,
+            url('header_background.JPG') center center / cover no-repeat,
             rgba(13, 17, 23, 0.75);
     }
     
@@ -312,7 +312,7 @@ textarea:focus {
     
     .site-header.scrolled {
         background: 
-            url('header_background.JPG') center center / 250% auto no-repeat,
+            url('header_background.JPG') center center / cover no-repeat,
             rgba(13, 17, 23, 0.85);
     }
     
@@ -324,7 +324,7 @@ textarea:focus {
 @media (max-width: 560px) {
     .site-header {
         background: 
-            url('header_background.JPG') center center / 300% auto no-repeat,
+            url('header_background.JPG') center center / cover no-repeat,
             rgba(13, 17, 23, 0.7);
     }
     
@@ -334,7 +334,7 @@ textarea:focus {
     
     .site-header.scrolled {
         background: 
-            url('header_background.JPG') center center / 300% auto no-repeat,
+            url('header_background.JPG') center center / cover no-repeat,
             rgba(13, 17, 23, 0.8);
     }
     
@@ -1057,21 +1057,29 @@ textarea:focus {
     gap: 18px;
     margin-top: 32px;
     justify-items: center;
+    width: 100%;
 }
 
 @media (max-width: 768px) {
     .contact-cards {
         grid-template-columns: 1fr;
-        max-width: 400px;
+        max-width: 300px;
         margin: 32px auto 0;
         gap: 16px;
+        width: 100%;
+        justify-items: center;
     }
 }
 
 @media (max-width: 560px) {
     .contact-cards {
+        grid-template-columns: 1fr;
+        max-width: 280px;
         gap: 14px;
         margin-top: 28px;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
     }
 }
 
@@ -1149,6 +1157,21 @@ textarea:focus {
     gap: 20px;
     width: 100%;
     max-width: 600px;
+}
+
+@media (max-width: 768px) {
+    .booking-form {
+        max-width: 500px;
+        padding: 28px;
+    }
+}
+
+@media (max-width: 560px) {
+    .booking-form {
+        max-width: 90%;
+        padding: 24px 20px;
+        gap: 16px;
+    }
 }
 
 .booking-form h3 {
