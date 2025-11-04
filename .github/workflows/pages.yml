@@ -6,6 +6,9 @@ on:
       - main
   workflow_dispatch:
 
+# כדי לא לקבל הודעות - צריך להשבית ב-GitHub Settings → Notifications → Actions
+# או להסיר את ה-workflow הזה אם לא צריך GitHub Pages
+
 permissions:
   contents: read
   pages: write
@@ -17,10 +20,11 @@ concurrency:
 
 jobs:
   deploy:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -36,4 +40,12 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
+        continue-on-error: true
+      
+      - name: Deployment status
+        if: steps.deployment.outcome == 'failure'
+        run: |
+          echo "⚠️ GitHub Pages deployment failed. Make sure GitHub Pages is enabled in repository settings."
+          echo "To enable: Go to Settings → Pages → Source: GitHub Actions"
+          exit 0
 
