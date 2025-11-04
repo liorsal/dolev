@@ -516,12 +516,16 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // פתח WhatsApp Web/App עם הטקסט מוכן - ההודעה תישלח ישירות לדולב
             // משתמשים בגישה שעובדת בכל הדפדפנים (כולל Safari, Firefox, Edge)
-            // Safari חוסם window.open ו-link.click(), אז נשתמש ב-location.href ישירות
-            // בדוק אם זה ספארי
-            const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+            // Safari חוסם window.open, אז נשתמש ב-location.href ישירות
+            // נבדוק אם זה ספארי
+            const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent) || 
+                           (navigator.vendor && navigator.vendor.indexOf('Apple') > -1 && 
+                            navigator.userAgent && !navigator.userAgent.match('CriOS') && 
+                            !navigator.userAgent.match('FxiOS'));
             
             if (isSafari) {
-                // בספארי, נשתמש ב-location.href ישירות - זה עובד הכי טוב
+                // בספארי, נשתמש ב-location.href ישירות - זה הכי אמין
+                // ספארי חוסם window.open ו-link.click(), אז נשתמש ב-location.href
                 window.location.href = whatsappUrl;
             } else {
                 // בדפדפנים אחרים (כרום, פיירפוקס), ננסה לפתוח בחלון חדש
