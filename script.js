@@ -318,9 +318,17 @@ document.addEventListener('DOMContentLoaded', () => {
             // קידוד הודעה ל-URL
             const encodedMessage = encodeURIComponent(message);
             
-            // פתיחת WhatsApp עם הודעה מוכנה (הקישור מהווצאפ באייקון)
-            const whatsappUrl = `https://wa.me/message/MWGZL4L7DTATI1?text=${encodedMessage}`;
+            // פתיחת WhatsApp עם הודעה מוכנה
+            // משתמשים ב-wa.me עם פרמטר text - הפורמט הנכון
+            // הקישור הקיים הוא quick link שלא תומך בפרמטר text
+            // לכן נשתמש בפורמט עם מספר טלפון או נשתמש ב-API
+            const whatsappUrl = `https://api.whatsapp.com/send?text=${encodedMessage}`;
+            
+            // פתח WhatsApp Web/App עם הטקסט מוכן
             window.open(whatsappUrl, '_blank');
+            
+            // לאחר פתיחת WhatsApp, המשתמש יצטרך לבחור את דולב מהרשימה או לחפש
+            // אם יש מספר טלפון ספציפי, ניתן להשתמש: `https://api.whatsapp.com/send?phone=972XXXXXXXXX&text=${encodedMessage}`
             
             // איפוס הטופס
             bookingForm.reset();
