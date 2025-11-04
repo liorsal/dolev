@@ -1086,6 +1086,28 @@ textarea:focus {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    .contact-layout > div:first-child {
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 560px) {
+    .contact-layout > div:first-child {
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto;
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+    }
 }
 
 @media (max-width: 560px) {
@@ -1093,19 +1115,35 @@ textarea:focus {
         text-align: center;
         align-items: center;
         width: 100%;
+        max-width: 100%;
         justify-content: center;
+        margin: 0 auto;
     }
     
     .contact-layout > div:first-child .section-header {
         align-items: center;
         text-align: center;
         width: 100%;
+        max-width: 100%;
         justify-content: center;
+        margin: 0 auto;
     }
     
     .contact-layout > div:first-child .section-header h2 {
         text-align: center;
         margin: 0 auto;
+        width: 100%;
+    }
+    
+    .contact-layout > div:first-child .section-tag {
+        margin: 0 auto;
+    }
+    
+    .contact-layout > div:first-child p {
+        text-align: center;
+        max-width: 100%;
+        margin: 0 auto;
+        width: 100%;
     }
 }
 
