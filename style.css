@@ -415,8 +415,8 @@ textarea:focus {
     }
     
     .header-profile-picture {
-        width: 55px;
-        height: 55px;
+        width: 82px;
+        height: 82px;
         top: 6px;
         right: 14px;
     }
@@ -432,8 +432,8 @@ textarea:focus {
     }
     
     .header-profile-picture {
-        width: 50px;
-        height: 50px;
+        width: 75px;
+        height: 75px;
         top: 6px;
         right: 12px;
         border-width: 2px;
@@ -762,19 +762,22 @@ textarea:focus {
 
 @media (max-width: 560px) {
     .btn {
-        padding: 16px 32px;
-        font-size: 1rem;
-        min-width: 160px;
-        width: 100%;
+        padding: 12px 24px;
+        font-size: 0.9rem;
+        min-width: 140px;
+        width: auto;
     }
     
     .hero-actions {
         flex-direction: column;
         width: 100%;
+        align-items: center;
     }
     
     .hero-actions .btn {
-        width: 100%;
+        width: auto;
+        min-width: 180px;
+        max-width: 90%;
     }
 }
 
