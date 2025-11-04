@@ -380,11 +380,23 @@ document.addEventListener('DOMContentLoaded', () => {
             const time = formData.get('time');
             const notes = formData.get('notes') || '';
             
+            // בדיקת תקינות השעה בטווח שעות הפעילות
+            const workingHours = getWorkingHours(date);
+            if (time < workingHours.min || time > workingHours.max) {
+                const dayName = new Date(date + 'T00:00:00').toLocaleDateString('he-IL', { weekday: 'long' });
+                if (dayName === 'יום שישי') {
+                    alert('ביום שישי שעות הפעילות הן 8:30-15:00');
+                } else {
+                    alert('שעות הפעילות הן 9:00-19:00');
+                }
+                return;
+            }
+            
             // בדיקת תור תפוס לפני שליחה
             if (window.firebaseDb) {
                 const isTaken = await isTimeSlotTaken(date, time);
                 if (isTaken) {
-                    alert('תור זה תפוס. אנא בחרו תאריך או שעה אחרת.');
+                    alert('תור זה תפוס או קרוב מדי לתור אחר. אנא בחרו תאריך או שעה אחרת (חייב להיות לפחות חצי שעה בין תורים).');
                     return;
                 }
             }
