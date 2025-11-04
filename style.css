@@ -1028,6 +1028,32 @@ textarea:focus {
     height: 20px;
 }
 
+.booking-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.form-group input.error,
+.form-group input.error:focus {
+    border-color: #ff4444;
+    box-shadow: 0 0 0 3px rgba(255, 68, 68, 0.1);
+}
+
+.form-group input.error::placeholder {
+    color: #ff4444;
+}
+
+.booking-form .error-message {
+    color: #ff4444;
+    font-size: 0.9rem;
+    margin-top: 4px;
+    display: none;
+}
+
+.form-group input.error + .error-message {
+    display: block;
+}
+
 @media (max-width: 768px) {
     .booking-form {
         padding: 24px;
