@@ -268,51 +268,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const formData = new FormData(bookingForm);
             const name = formData.get('name');
             const phone = formData.get('phone');
-            const date = formData.get('date');
-            const time = formData.get('time');
-            const notes = formData.get('notes') || '';
-            
-            // בדיקת תור תפוס לפני שליחה
-            if (window.firebaseDb) {
-                const isTaken = await isTimeSlotTaken(date, time);
-                if (isTaken) {
-                    alert('תור זה תפוס. אנא בחרו תאריך או שעה אחרת.');
-                    return;
-                }
-            }
-            
-            // שמירת התור ב-Firebase
-            if (window.firebaseDb) {
-                const saved = await saveBooking(name, phone, date, time, notes);
-                if (!saved) {
-                    alert('אירעה שגיאה בשמירת התור. אנא נסו שוב.');
-                    return;
-                }
-            } else {
-                alert('Firebase לא מוגדר. אנא נסו שוב מאוחר יותר.');
-                return;
-            }
-            
-            // פורמט תאריך לעברית
-            const dateObj = new Date(date);
-            const formattedDate = dateObj.toLocaleDateString('he-IL', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
             
             // בניית הודעה ל-WhatsApp
             let message = `שלום! אני מעוניין/ת לתאם תור:\n\n`;
             message += `👤 שם: ${name}\n`;
             message += `📞 טלפון: ${phone}\n`;
-            message += `📅 תאריך: ${formattedDate}\n`;
-            message += `🕐 שעה: ${time}\n`;
-            
-            if (notes.trim()) {
-                message += `📝 הערות: ${notes}\n`;
-            }
-            
             message += `\nתודה!`;
             
             // קידוד הודעה ל-URL
@@ -330,10 +290,6 @@ document.addEventListener('DOMContentLoaded', () => {
             
             // איפוס הטופס
             bookingForm.reset();
-            if (dateInput) {
-                const today = new Date().toISOString().split('T')[0];
-                dateInput.setAttribute('min', today);
-            }
         });
     }
 });
