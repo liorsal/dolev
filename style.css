@@ -965,6 +965,9 @@ textarea:focus {
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 20px;
     margin-top: 40px;
+    justify-items: center;
+    width: 100%;
+    max-width: 100%;
 }
 
 .gallery-item {
@@ -976,6 +979,7 @@ textarea:focus {
     border: 1px solid var(--border);
     cursor: pointer;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    width: 100%;
 }
 
 .gallery-item:hover,
@@ -1006,18 +1010,26 @@ textarea:focus {
         grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
         gap: 16px;
         margin-top: 32px;
+        justify-items: center;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 560px) {
     .image-gallery {
         grid-template-columns: repeat(2, 1fr);
         gap: 12px;
         margin-top: 24px;
+        justify-items: center;
+        margin-left: auto;
+        margin-right: auto;
+        width: 100%;
     }
     
     .gallery-item {
         aspect-ratio: 1;
+        width: 100%;
     }
 }
 
