@@ -344,14 +344,7 @@ textarea:focus {
 }
 
 .site-header.scrolled {
-    background: 
-        url('header_background.JPG') center center / 200% auto no-repeat,
-        rgba(13, 17, 23, 0.95);
     box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
-}
-
-.site-header.scrolled::before {
-    background: rgba(13, 17, 23, 0.6);
 }
 
 .header-inner {
