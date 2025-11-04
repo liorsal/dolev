@@ -888,10 +888,10 @@ textarea:focus {
 
 @media (max-width: 560px) {
     .gallery-logo {
-        width: 18px;
-        height: 18px;
-        border-width: 1px;
-        margin-bottom: 8px;
+        width: 36px;
+        height: 36px;
+        border-width: 2px;
+        margin-bottom: 12px;
     }
 }
 
