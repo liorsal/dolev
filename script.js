@@ -504,8 +504,12 @@ document.addEventListener('DOMContentLoaded', () => {
             // מספר טלפון בפורמט בינלאומי: 0525222787 -> 972525222787
             const phoneNumber = '972525222787'; // דולב מלול
             
-            // פתיחת WhatsApp עם הטקסט מוכן ישירות למספר של דולב
-            const whatsappUrl = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodedMessage}`;
+            // פתיחת WhatsApp ישירות באפליקציה (לא באתר)
+            // נשתמש ב-wa.me שיפתח את האפליקציה אם מותקנת, אחרת את האתר
+            // או whatsapp:// לפתיחה ישירה באפליקציה
+            // ננסה קודם whatsapp:// ואם זה לא עובד, נשתמש ב-wa.me
+            const whatsappAppUrl = `whatsapp://send?phone=${phoneNumber}&text=${encodedMessage}`;
+            const whatsappWebUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
             
             // איפוס הטופס לפני מעבר לווצאפ
             bookingForm.reset();
@@ -514,52 +518,32 @@ document.addEventListener('DOMContentLoaded', () => {
                 dateInput.setAttribute('min', today);
             }
             
-            // פתח WhatsApp Web/App עם הטקסט מוכן - ההודעה תישלח ישירות לדולב
-            // משתמשים בגישה שעובדת בכל הדפדפנים (כולל Safari, Firefox, Edge)
-            // Safari חוסם window.open, אז נשתמש ב-location.replace ישירות
-            // נבדוק אם זה ספארי
+            // פתח WhatsApp ישירות באפליקציה - ההודעה תישלח ישירות לדולב
+            // נשתמש ב-wa.me שיפתח את האפליקציה ישירות אם היא מותקנת
+            // wa.me עובד טוב יותר מ-whatsapp:// כי הוא מטפל גם במקרה שהאפליקציה לא מותקנת
             const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent) || 
                            (navigator.vendor && navigator.vendor.indexOf('Apple') > -1 && 
                             navigator.userAgent && !navigator.userAgent.match('CriOS') && 
                             !navigator.userAgent.match('FxiOS'));
             
+            // wa.me יפתח את האפליקציה ישירות אם היא מותקנת, אחרת את האתר
+            // זה עדיף מ-whatsapp:// כי הוא עובד גם אם האפליקציה לא מותקנת
             if (isSafari) {
-                // בספארי, נשתמש ב-location.replace במקום location.href
-                // location.replace עובד טוב יותר בספארי כי הוא לא מוסיף את הדף להיסטוריה
-                // אם זה לא עובד, ננסה location.href
-                try {
-                    window.location.replace(whatsappUrl);
-                } catch (error) {
-                    console.error('Error with location.replace in Safari:', error);
-                    // אם יש שגיאה, ננסה location.href
-                    window.location.href = whatsappUrl;
-                }
+                // בספארי, נשתמש ב-location.href ישירות
+                window.location.href = whatsappWebUrl;
             } else {
-                // בדפדפנים אחרים (כרום, פיירפוקס), ננסה לפתוח בחלון חדש
+                // בדפדפנים אחרים, ננסה לפתוח בחלון חדש
                 try {
-                    const newWindow = window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+                    const newWindow = window.open(whatsappWebUrl, '_blank', 'noopener,noreferrer');
                     
                     // אם popup נחסם, נשתמש ב-location.href
                     if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
-                        window.location.href = whatsappUrl;
-                    } else {
-                        // אם נפתח בחלון חדש, נבדוק אחרי זמן קצר אם זה באמת נפתח
-                        setTimeout(() => {
-                            try {
-                                if (!newWindow || newWindow.closed || typeof newWindow.closed === 'undefined') {
-                                    // החלון נסגר או נחסם, נשתמש ב-location.href
-                                    window.location.href = whatsappUrl;
-                                }
-                            } catch (e) {
-                                // אם יש שגיאה, נשתמש ב-location.href
-                                window.location.href = whatsappUrl;
-                            }
-                        }, 100);
+                        window.location.href = whatsappWebUrl;
                     }
                 } catch (error) {
                     // אם יש שגיאה, נשתמש ב-location.href ישירות
                     console.error('Error opening WhatsApp:', error);
-                    window.location.href = whatsappUrl;
+                    window.location.href = whatsappWebUrl;
                 }
             }
         });
