@@ -181,7 +181,47 @@ document.addEventListener('DOMContentLoaded', () => {
         dateInput.setAttribute('min', today);
     }
 
-    // פונקציה לבדיקת תור תפוס
+    // פונקציה לקביעת שעות פעילות לפי יום בשבוע
+    function getWorkingHours(dateString) {
+        const date = new Date(dateString + 'T00:00:00');
+        const dayOfWeek = date.getDay(); // 0 = ראשון, 5 = שישי
+        
+        if (dayOfWeek === 5) { // שישי
+            return { min: '08:30', max: '15:00' };
+        } else if (dayOfWeek >= 0 && dayOfWeek <= 4) { // א-ה
+            return { min: '09:00', max: '19:00' };
+        }
+        return { min: '09:00', max: '19:00' }; // ברירת מחדל
+    }
+
+    // עדכן שעות פעילות בהתאם לתאריך שנבחר
+    function updateTimeInput() {
+        if (!dateInput?.value || !timeInput) return;
+        
+        const workingHours = getWorkingHours(dateInput.value);
+        timeInput.setAttribute('min', workingHours.min);
+        timeInput.setAttribute('max', workingHours.max);
+        
+        // אם השעה הנוכחית לא תקינה, איפוס
+        if (timeInput.value && (timeInput.value < workingHours.min || timeInput.value > workingHours.max)) {
+            timeInput.value = '';
+        }
+    }
+
+    // פונקציה להמרת זמן לדקות
+    function timeToMinutes(timeString) {
+        const [hours, minutes] = timeString.split(':').map(Number);
+        return hours * 60 + minutes;
+    }
+
+    // פונקציה להמרת דקות לזמן
+    function minutesToTime(totalMinutes) {
+        const hours = Math.floor(totalMinutes / 60);
+        const minutes = totalMinutes % 60;
+        return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+    }
+
+    // פונקציה לבדיקת תור תפוס (כולל 30 דקות לפני ואחרי)
     async function isTimeSlotTaken(date, time) {
         if (!window.firebaseDb) {
             console.warn('Firebase not initialized');
@@ -191,9 +231,30 @@ document.addEventListener('DOMContentLoaded', () => {
         try {
             const { collection, query, where, getDocs } = await import('https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js');
             const bookingsRef = collection(window.firebaseDb, 'bookings');
-            const q = query(bookingsRef, where('date', '==', date), where('time', '==', time));
+            const q = query(bookingsRef, where('date', '==', date));
             const querySnapshot = await getDocs(q);
-            return !querySnapshot.empty;
+            
+            if (querySnapshot.empty) return false;
+            
+            // בדוק אם יש תור בטווח של 30 דקות (לפני או אחרי)
+            const requestedTimeMinutes = timeToMinutes(time);
+            const bookings = [];
+            querySnapshot.forEach((doc) => {
+                bookings.push(doc.data().time);
+            });
+            
+            // בדוק כל תור קיים
+            for (const bookingTime of bookings) {
+                const bookingTimeMinutes = timeToMinutes(bookingTime);
+                const timeDiff = Math.abs(requestedTimeMinutes - bookingTimeMinutes);
+                
+                // אם ההבדל קטן או שווה ל-30 דקות, התור תפוס
+                if (timeDiff <= 30) {
+                    return true;
+                }
+            }
+            
+            return false;
         } catch (error) {
             console.error('Error checking time slot:', error);
             return false;
