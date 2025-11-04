@@ -299,6 +299,50 @@ textarea:focus {
     z-index: -1;
 }
 
+@media (max-width: 768px) {
+    .site-header {
+        background: 
+            url('header_background.JPG') center center / 250% auto no-repeat,
+            rgba(13, 17, 23, 0.75);
+    }
+    
+    .site-header::before {
+        background: rgba(13, 17, 23, 0.3);
+    }
+    
+    .site-header.scrolled {
+        background: 
+            url('header_background.JPG') center center / 250% auto no-repeat,
+            rgba(13, 17, 23, 0.85);
+    }
+    
+    .site-header.scrolled::before {
+        background: rgba(13, 17, 23, 0.4);
+    }
+}
+
+@media (max-width: 560px) {
+    .site-header {
+        background: 
+            url('header_background.JPG') center center / 300% auto no-repeat,
+            rgba(13, 17, 23, 0.7);
+    }
+    
+    .site-header::before {
+        background: rgba(13, 17, 23, 0.25);
+    }
+    
+    .site-header.scrolled {
+        background: 
+            url('header_background.JPG') center center / 300% auto no-repeat,
+            rgba(13, 17, 23, 0.8);
+    }
+    
+    .site-header.scrolled::before {
+        background: rgba(13, 17, 23, 0.35);
+    }
+}
+
 .site-header.scrolled {
     background: 
         url('header_background.JPG') center center / 200% auto no-repeat,
