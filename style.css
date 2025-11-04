@@ -1118,7 +1118,7 @@ textarea:focus {
         max-width: 100%;
         justify-content: center;
         margin: 0 auto;
-        padding-right: 15px;
+        padding-right: 13px;
     }
     
     .contact-layout > div:first-child .section-header {
@@ -1376,7 +1376,7 @@ textarea:focus {
         padding: 24px 20px;
         gap: 16px;
         margin: 0 auto;
-        margin-right: 23px;
+        margin-right: 25px;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
