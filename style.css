@@ -1318,8 +1318,8 @@ textarea:focus {
 
 @media (max-width: 560px) {
     .booking-form {
-        max-width: 260px;
-        width: 260px;
+        max-width: 130px;
+        width: 130px;
         padding: 20px 18px;
         gap: 14px;
         margin: 0 auto;
